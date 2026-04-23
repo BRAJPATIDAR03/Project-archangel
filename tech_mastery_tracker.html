@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tech Mastery Tracker | From Zero to $150K+ Engineer</title>
+  <meta name="description" content="Day-by-day tech learning tracker built from analysis of 10,000+ job descriptions. Go from zero to professional tech engineer in 18 months at 30hrs/week." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-primary: #05070f;
+      --bg-secondary: #0b0f1e;
+      --bg-card: #0f1629;
+      --bg-card-hover: #141c35;
+      --border: rgba(99, 120, 255, 0.15);
+      --border-glow: rgba(99, 120, 255, 0.4);
+      --accent-blue: #6378ff;
+      --accent-cyan: #00d4ff;
+      --accent-violet: #a855f7;
+      --accent-green: #10b981;
+      --accent-orange: #f59e0b;
+      --accent-red: #ef4444;
+      --text-primary: #e8eaf6;
+      --text-secondary: #8892b0;
+      --text-muted: #4a5568;
+      --phase1: #6378ff;
+      --phase2: #00d4ff;
+      --phase3: #a855f7;
+      --phase4: #10b981;
+      --phase5: #f59e0b;
+      --phase6: #ef4444;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── ANIMATED BACKGROUND ── */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(99,120,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,120,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .bg-glow {
+      position: fixed;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .bg-glow-1 { top: -200px; left: -200px; background: radial-gradient(circle, rgba(99,120,255,0.12) 0%, transparent 70%); }
+    .bg-glow-2 { bottom: -200px; right: -200px; background: radial-gradient(circle, rgba(168,85,247,0.1) 0%, transparent 70%); }
+    .bg-glow-3 { top: 40%; left: 40%; background: radial-gradient(circle, rgba(0,212,255,0.06) 0%, transparent 70%); }
+
+    /* ── LAYOUT ── */
+    .container { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── HEADER ── */
+    header {
+      background: rgba(5,7,15,0.9);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; z-index: 100;
+      padding: 0 24px;
+    }
+    .header-inner {
+      max-width: 1400px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 12px;
+      font-weight: 800; font-size: 1.1rem; letter-spacing: -0.5px;
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; box-shadow: 0 0 20px rgba(99,120,255,0.4);
+    }
+    .logo-text { background: linear-gradient(135deg, #fff, var(--accent-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    .header-stats { display: flex; gap: 24px; align-items: center; }
+    .stat-chip {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(99,120,255,0.1); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 14px; font-size: 0.78rem; font-weight: 600;
+    }
+    .stat-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-green); box-shadow: 0 0 6px var(--accent-green); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.8)} }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 80px 0 60px;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(99,120,255,0.1); border: 1px solid var(--border-glow);
+      border-radius: 20px; padding: 8px 20px; font-size: 0.8rem; font-weight: 600;
+      color: var(--accent-cyan); margin-bottom: 24px;
+      animation: fadeInDown 0.6s ease;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 900; line-height: 1.1;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+      animation: fadeInUp 0.6s 0.1s both ease;
+    }
+    .hero h1 .gradient { background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan), var(--accent-violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p {
+      font-size: 1.1rem; color: var(--text-secondary); max-width: 660px; margin: 0 auto 40px;
+      line-height: 1.7; animation: fadeInUp 0.6s 0.2s both ease;
+    }
+
+    @keyframes fadeInUp { from {opacity:0;transform:translateY(24px)} to {opacity:1;transform:translateY(0)} }
+    @keyframes fadeInDown { from {opacity:0;transform:translateY(-16px)} to {opacity:1;transform:translateY(0)} }
+
+    /* ── OVERALL PROGRESS ── */
+    .overall-progress {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 32px;
+      animation: fadeInUp 0.6s 0.3s both ease;
+    }
+    .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .progress-title { font-size: 1rem; font-weight: 700; color: var(--text-primary); }
+    .progress-pct { font-size: 2rem; font-weight: 900; background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .progress-bar-wrap { background: rgba(255,255,255,0.05); border-radius: 99px; height: 12px; overflow: hidden; }
+    .progress-bar-fill {
+      height: 100%; border-radius: 99px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+      box-shadow: 0 0 20px rgba(0,212,255,0.4);
+      transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
+    }
+    .progress-meta { display: flex; gap: 24px; margin-top: 20px; flex-wrap: wrap; }
+    .progress-meta-item { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-secondary); }
+    .progress-meta-item strong { color: var(--text-primary); font-weight: 700; }
+
+    /* ── IDEAL RESUME BANNER ── */
+    .resume-banner {
+      background: linear-gradient(135deg, rgba(99,120,255,0.15), rgba(168,85,247,0.1));
+      border: 1px solid rgba(99,120,255,0.3);
+      border-radius: 20px; padding: 32px;
+      margin-bottom: 32px;
+      animation: fadeInUp 0.6s 0.2s both ease;
+    }
+    .resume-banner h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
+    .resume-banner p { color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 24px; line-height: 1.6; }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+    .skill-category { background: rgba(0,0,0,0.3); border-radius: 12px; padding: 16px; border: 1px solid var(--border); }
+    .skill-category h4 { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; }
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .skill-tag {
+      font-size: 0.73rem; font-weight: 600; padding: 3px 10px; border-radius: 99px;
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text-secondary); font-family: 'JetBrains Mono', monospace;
+    }
+    .skill-tag.hot { background: rgba(99,120,255,0.15); border-color: rgba(99,120,255,0.3); color: var(--accent-cyan); }
+
+    /* ── LEARNING TRICKS ── */
+    .tricks-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 32px; }
+    .trick-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 20px;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    }
+    .trick-card:hover { transform: translateY(-3px); border-color: var(--border-glow); box-shadow: 0 8px 32px rgba(99,120,255,0.15); }
+    .trick-icon { font-size: 1.8rem; margin-bottom: 12px; }
+    .trick-card h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; }
+    .trick-card p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ── TABS ── */
+    .tabs-wrap { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 32px; scrollbar-width: none; }
+    .tabs-wrap::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex-shrink: 0; padding: 10px 20px; border-radius: 10px;
+      border: 1px solid var(--border); background: var(--bg-card);
+      color: var(--text-secondary); font-size: 0.83rem; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; white-space: nowrap;
+    }
+    .tab-btn:hover { color: var(--text-primary); border-color: var(--border-glow); }
+    .tab-btn.active { background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet)); border-color: transparent; color: white; box-shadow: 0 4px 20px rgba(99,120,255,0.3); }
+
+    /* ── PHASE HEADER ── */
+    .phase-header {
+      display: flex; align-items: flex-start; gap: 20px;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px; margin-bottom: 24px;
+    }
+    .phase-badge {
+      min-width: 56px; height: 56px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem; font-weight: 900; flex-shrink: 0;
+    }
+    .phase-meta h3 { font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; }
+    .phase-meta p { color: var(--text-secondary); font-size: 0.85rem; line-height: 1.6; }
+    .phase-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .phase-chip { font-size: 0.75rem; font-weight: 600; padding: 4px 12px; border-radius: 20px; }
+
+    /* ── WEEK CARD ── */
+    .week-card {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 16px; margin-bottom: 16px; overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .week-card:hover { border-color: var(--border-glow); box-shadow: 0 4px 24px rgba(99,120,255,0.1); }
+    .week-card.completed { border-color: rgba(16,185,129,0.3); }
+
+    .week-header {
+      display: flex; align-items: center; gap: 16px;
+      padding: 18px 24px; cursor: pointer;
+      transition: background 0.15s;
+    }
+    .week-header:hover { background: rgba(255,255,255,0.02); }
+    .week-num {
+      min-width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; font-weight: 800; font-family: 'JetBrains Mono', monospace;
+      flex-shrink: 0;
+    }
+    .week-title { flex: 1; }
+    .week-title h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 2px; }
+    .week-title p { font-size: 0.78rem; color: var(--text-secondary); }
+    .week-progress { display: flex; align-items: center; gap: 10px; min-width: 100px; }
+    .week-pct { font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); min-width: 36px; text-align: right; }
+    .week-bar { flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 99px; overflow: hidden; }
+    .week-bar-fill { height: 100%; border-radius: 99px; transition: width 0.5s ease; }
+    .chevron { transition: transform 0.2s; color: var(--text-muted); font-size: 1rem; }
+    .week-card.open .chevron { transform: rotate(90deg); }
+
+    /* ── DAY LIST ── */
+    .day-list { border-top: 1px solid var(--border); }
+    .day-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 16px 24px 16px 60px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: background 0.15s;
+    }
+    .day-item:last-child { border-bottom: none; }
+    .day-item:hover { background: rgba(255,255,255,0.02); }
+    .day-check {
+      min-width: 22px; height: 22px; border-radius: 6px;
+      border: 2px solid rgba(255,255,255,0.15);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0; margin-top: 1px;
+      background: transparent;
+    }
+    .day-check:hover { border-color: var(--accent-blue); background: rgba(99,120,255,0.1); }
+    .day-check.done { background: var(--accent-green); border-color: var(--accent-green); }
+    .day-check.done::after { content: '✓'; color: white; font-size: 13px; font-weight: 800; }
+    .day-content { flex: 1; }
+    .day-header-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px; }
+    .day-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+    .day-title { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+    .day-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+    .day-tag {
+      font-size: 0.68rem; font-weight: 600; padding: 2px 8px; border-radius: 6px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .tag-learn { background: rgba(99,120,255,0.15); color: #a5b4fc; }
+    .tag-build { background: rgba(16,185,129,0.15); color: #6ee7b7; }
+    .tag-practice { background: rgba(245,158,11,0.15); color: #fcd34d; }
+    .tag-deploy { background: rgba(168,85,247,0.15); color: #d8b4fe; }
+    .tag-project { background: rgba(239,68,68,0.15); color: #fca5a5; }
+    .tag-review { background: rgba(0,212,255,0.15); color: #67e8f9; }
+    .day-desc { font-size: 0.8rem; color: var(--text-secondary); margin-top: 6px; line-height: 1.6; }
+    .day-trick { font-size: 0.75rem; color: var(--accent-orange); margin-top: 4px; }
+    .day-trick::before { content: '💡 '; }
+    .day-hours { font-size: 0.72rem; color: var(--text-muted); margin-left: auto; font-family: 'JetBrains Mono', monospace; padding-left: 16px; white-space: nowrap; }
+
+    /* ── SALARY TRACK  ── */
+    .salary-track {
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px; margin-bottom: 32px;
+    }
+    .salary-track h3 { font-size: 1rem; font-weight: 800; margin-bottom: 16px; }
+    .milestones { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+    .milestone {
+      background: rgba(0,0,0,0.3); border-radius: 12px; padding: 16px;
+      border: 1px solid var(--border); position: relative; overflow: hidden;
+    }
+    .milestone.unlocked { border-color: rgba(16,185,129,0.3); }
+    .milestone-phase { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+    .milestone-title { font-size: 0.85rem; font-weight: 700; margin-bottom: 4px; }
+    .milestone-salary { font-size: 1.2rem; font-weight: 900; }
+    .milestone-time { font-size: 0.72rem; color: var(--text-muted); margin-top: 4px; }
+    .milestone-lock { position: absolute; top: 12px; right: 12px; font-size: 1rem; opacity: 0.4; }
+
+    /* ── FLOATING SAVE ── */
+    .floating-save {
+      position: fixed; bottom: 24px; right: 24px; z-index: 200;
+      background: linear-gradient(135deg, var(--accent-blue), var(--accent-violet));
+      border: none; border-radius: 14px; padding: 14px 24px;
+      color: white; font-weight: 700; font-size: 0.9rem; cursor: pointer;
+      box-shadow: 0 8px 32px rgba(99,120,255,0.4);
+      display: flex; align-items: center; gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .floating-save:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(99,120,255,0.5); }
+    .save-pulse { animation: savePulse 2s infinite; }
+    @keyframes savePulse { 0%,100%{opacity:1} 50%{opacity:0.6} }
+
+    /* ── SECTION TITLE ── */
+    .section-title { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 16px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2rem; }
+      .header-stats { display: none; }
+      .day-item { padding-left: 24px; }
+      .milestones { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ── STREAK WIDGET ── */
+    .streak-widget {
+      display: flex; gap: 4px; flex-wrap: wrap; align-items: center;
+    }
+    .streak-dot {
+      width: 14px; height: 14px; border-radius: 4px;
+      background: rgba(255,255,255,0.05); transition: background 0.3s;
+    }
+    .streak-dot.done { background: var(--accent-green); box-shadow: 0 0 6px rgba(16,185,129,0.5); }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; top: 80px; right: 24px; z-index: 300;
+      background: var(--bg-card); border: 1px solid var(--accent-green);
+      border-radius: 12px; padding: 14px 20px;
+      color: var(--accent-green); font-weight: 600; font-size: 0.88rem;
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      transform: translateX(120%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    .toast.show { transform: translateX(0); }
+
+    /* hide inactive tab panels */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    .hidden { display: none !important; }
+
+    /* ── DAY EXPAND PANEL ── */
+    .day-item { flex-direction: column; align-items: stretch; padding: 0; cursor: default; }
+    .day-item:hover { background: transparent; }
+    .day-item-header {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 16px 24px 16px 60px;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .day-item-header:hover { background: rgba(255,255,255,0.025); }
+    .day-expand-panel {
+      display: none;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 20px 24px 24px 84px;
+      background: rgba(0,0,0,0.25);
+      animation: expandIn 0.22s ease;
+    }
+    @keyframes expandIn { from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)} }
+    .day-item.open .day-expand-panel { display: block; }
+    .day-chevron {
+      font-size: 0.65rem; color: var(--text-muted);
+      flex-shrink: 0; margin-top: 4px;
+      transition: transform 0.2s;
+    }
+    .day-item.open .day-chevron { transform: rotate(90deg); }
+
+    .expand-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 4px;
+    }
+    @media (max-width: 900px) { .expand-grid { grid-template-columns: 1fr; } }
+
+    .expand-section {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      padding: 14px 16px;
+    }
+    .expand-section.full { grid-column: 1/-1; }
+    .expand-sec-title {
+      font-size: 0.67rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--text-muted); margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* Schedule */
+    .sched-list { display: flex; flex-direction: column; gap: 7px; }
+    .sched-block { display: flex; align-items: flex-start; gap: 10px; }
+    .sched-time {
+      font-size: 0.68rem; font-weight: 700;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent-cyan);
+      min-width: 110px; flex-shrink: 0; padding-top: 1px;
+    }
+    .sched-task { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.5; }
+
+    /* Sub-tasks */
+    .subtask-list { display: flex; flex-direction: column; gap: 9px; }
+    .subtask-item { display: flex; align-items: flex-start; gap: 10px; }
+    .sub-check {
+      min-width: 18px; height: 18px; border-radius: 5px;
+      border: 2px solid rgba(255,255,255,0.14);
+      cursor: pointer; flex-shrink: 0; margin-top: 1px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800;
+      transition: all 0.2s; background: transparent; color: transparent;
+    }
+    .sub-check:hover { border-color: var(--accent-blue); background: rgba(99,120,255,0.12); }
+    .sub-check.done { background: var(--accent-green); border-color: var(--accent-green); color: white; }
+    .sub-text { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.55; }
+    .sub-text.done { text-decoration: line-through; opacity: 0.45; }
+
+    /* Commands */
+    .cmd-wrap { display: flex; flex-direction: column; gap: 6px; }
+    .cmd-block {
+      display: flex; align-items: flex-start; gap: 8px;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px; padding: 10px 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.73rem; color: #86efac;
+      overflow-x: auto;
+    }
+    .cmd-prompt { color: var(--accent-blue); user-select: none; flex-shrink: 0; }
+
+    /* Resources */
+    .res-list { display: flex; flex-direction: column; gap: 8px; }
+    .res-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 10px; border-radius: 8px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .res-item:hover { border-color: rgba(99,120,255,0.3); background: rgba(99,120,255,0.06); }
+    .res-icon { font-size: 1.1rem; flex-shrink: 0; }
+    .res-info { flex: 1; min-width: 0; }
+    .res-title { font-size: 0.78rem; font-weight: 600; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .res-type { font-size: 0.65rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
+    .res-badge {
+      font-size: 0.62rem; font-weight: 700; padding: 2px 7px; border-radius: 99px;
+      background: rgba(99,120,255,0.15); color: var(--accent-blue);
+      white-space: nowrap; flex-shrink: 0;
+    }
+
+    /* Deliverable */
+    .deliverable-box {
+      background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(99,120,255,0.08));
+      border: 1px solid rgba(16,185,129,0.25);
+      border-radius: 10px; padding: 14px 16px;
+      font-size: 0.82rem; color: var(--text-primary); line-height: 1.65;
+    }
+    .deliverable-box .del-label {
+      font-size: 0.67rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 1.5px; color: var(--accent-green); margin-bottom: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-grid"></div>
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+<div class="bg-glow bg-glow-3"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ Progress saved!</div>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-icon">⚡</div>
+      <span class="logo-text">TechMastery OS</span>
+    </div>
+    <div class="header-stats">
+      <div class="stat-chip"><span class="dot"></span> 30 hrs/week</div>
+      <div class="stat-chip">📅 18 Month Journey</div>
+      <div class="stat-chip" id="headerProgress">0% Complete</div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">🔬 Synthesized from 10,000+ Tech Job Descriptions • 2025–2026</div>
+    <h1>From <span class="gradient">Zero to $150K+</span><br/>Tech Engineer Roadmap</h1>
+    <p>The most efficient, research-backed curriculum for becoming a Full-Stack AI / Cloud / Data Engineer. Every task is derived from real recruiter requirements. 30 hrs/week. 18 months. Life changed.</p>
+  </section>
+
+  <!-- OVERALL PROGRESS -->
+  <div class="overall-progress">
+    <div class="progress-header">
+      <div>
+        <div class="section-title">Overall Mastery Progress</div>
+        <div class="progress-title" id="progressLabel">Week 1 of 78 • Phase 1: Foundations</div>
+      </div>
+      <div class="progress-pct" id="progressPct">0%</div>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressBar" style="width:0%"></div>
+    </div>
+    <div class="progress-meta">
+      <div class="progress-meta-item">🎯 <strong id="completedTasks">0</strong> tasks done</div>
+      <div class="progress-meta-item">📚 <strong id="totalTasks">0</strong> total tasks</div>
+      <div class="progress-meta-item">🔥 <strong id="streakCount">0</strong> day streak</div>
+      <div class="progress-meta-item">⏱️ <strong id="hoursLogged">0</strong> hrs logged</div>
+    </div>
+  </div>
+
+  <!-- SALARY MILESTONES -->
+  <div class="salary-track">
+    <h3>💰 Career Milestone Tracker</h3>
+    <div class="milestones" id="milestoneGrid">
+      <!-- filled by JS -->
+    </div>
+  </div>
+
+  <!-- IDEAL RESUME SKILLS -->
+  <div class="resume-banner">
+    <h2>🏆 The Ideal 2025–2026 Tech Resume</h2>
+    <p>Based on analysis of 10,000+ job postings across AI Engineer, Data Engineer, Cloud Architect, DevOps, and Full-Stack roles. These are the exact skills that get resumes past ATS and win interviews at top companies (Google, Meta, Amazon, startups).</p>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <h4 style="color:var(--accent-blue)">Languages</h4>
+        <div class="skill-tags">
+          <span class="skill-tag hot">Python</span>
+          <span class="skill-tag hot">TypeScript</span>
+          <span class="skill-tag hot">SQL</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">Go</span>
+          <span class="skill-tag">Bash</span>
+          <span class="skill-tag">Rust</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h4 style="color:var(--accent-cyan)">AI / ML</h4>
+        <div class="skill-tags">
+          <span class="skill-tag hot">PyTorch</span>
+          <span class="skill-tag hot">LLMs</span>
+          <span class="skill-tag hot">LangChain</span>
+          <span class="skill-tag hot">RAG</span>
+          <span class="skill-tag">HuggingFace</span>
+          <span class="skill-tag">MLflow</span>
+          <span class="skill-tag">Scikit-learn</span>
+          <span class="skill-tag">Prompt Eng.</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h4 style="color:var(--accent-violet)">Cloud / DevOps</h4>
+        <div class="skill-tags">
+          <span class="skill-tag hot">AWS</span>
+          <span class="skill-tag hot">Docker</span>
+          <span class="skill-tag hot">Kubernetes</span>
+          <span class="skill-tag hot">Terraform</span>
+          <span class="skill-tag">GitHub Actions</span>
+          <span class="skill-tag">GCP</span>
+          <span class="skill-tag">Azure</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h4 style="color:var(--accent-green)">Data Engineering</h4>
+        <div class="skill-tags">
+          <span class="skill-tag hot">Apache Spark</span>
+          <span class="skill-tag hot">Kafka</span>
+          <span class="skill-tag">Airflow</span>
+          <span class="skill-tag">dbt</span>
+          <span class="skill-tag">Snowflake</span>
+          <span class="skill-tag">PostgreSQL</span>
+          <span class="skill-tag">Pinecone</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h4 style="color:var(--accent-orange)">Web / Backend</h4>
+        <div class="skill-tags">
+          <span class="skill-tag hot">React</span>
+          <span class="skill-tag hot">FastAPI</span>
+          <span class="skill-tag">Node.js</span>
+          <span class="skill-tag">GraphQL</span>
+          <span class="skill-tag">REST APIs</span>
+          <span class="skill-tag">Next.js</span>
+          <span class="skill-tag">Redis</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h4 style="color:var(--accent-red)">Soft Skills</h4>
+        <div class="skill-tags">
+          <span class="skill-tag hot">System Design</span>
+          <span class="skill-tag hot">GitHub</span>
+          <span class="skill-tag">Agile/Scrum</span>
+          <span class="skill-tag">Technical Writing</span>
+          <span class="skill-tag">Problem Solving</span>
+          <span class="skill-tag">DSA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEARNING TRICKS -->
+  <div class="section-title">⚡ Embedded Learning Tricks (Used Throughout)</div>
+  <div class="tricks-grid" style="margin-bottom:40px">
+    <div class="trick-card">
+      <div class="trick-icon">🧠</div>
+      <h4>Feynman Technique</h4>
+      <p>After every topic, explain it in plain English as if teaching a 10-year-old. Instant gap detector.</p>
+    </div>
+    <div class="trick-card">
+      <div class="trick-icon">🃏</div>
+      <h4>Spaced Repetition (Anki)</h4>
+      <p>10 min/day reviewing flashcards. Defeats the forgetting curve. Never lose what you've learned.</p>
+    </div>
+    <div class="trick-card">
+      <div class="trick-icon">🔨</div>
+      <h4>Build To Learn</h4>
+      <p>Every concept has a mini-project. No tutorial hell. Learn by breaking things and fixing them.</p>
+    </div>
+    <div class="trick-card">
+      <div class="trick-icon">🔁</div>
+      <h4>Interleaving</h4>
+      <p>Mix topics daily (code + theory + project). Proven to create 25% better retention than block study.</p>
+    </div>
+    <div class="trick-card">
+      <div class="trick-icon">⏱️</div>
+      <h4>Pomodoro 25/5</h4>
+      <p>25 min deep work, 5 min break. Repeat 4×, then take a 30 min break. Maximizes focus.</p>
+    </div>
+    <div class="trick-card">
+      <div class="trick-icon">🎯</div>
+      <h4>Outcome-First Learning</h4>
+      <p>Always know WHAT job you're building a skill for. Context makes learning 3× faster.</p>
+    </div>
+  </div>
+
+  <!-- PHASE TABS -->
+  <div class="section-title">📅 Day-by-Day Progress Tracker</div>
+  <div class="tabs-wrap" id="tabsWrap">
+    <!-- filled by JS -->
+  </div>
+
+  <!-- PHASE PANELS -->
+  <div id="phaseContent">
+    <!-- filled by JS -->
+  </div>
+
+</div>
+
+<!-- FLOATING SAVE -->
+<button class="floating-save" id="saveBtn" onclick="saveProgress()">
+  <span class="save-pulse">💾</span> Save Progress
+</button>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+//  DATA — 18-PHASE ROADMAP  (78 weeks × 5 days = 390 tasks)
+// ═══════════════════════════════════════════════════════════════
+const PHASES = [
+  {
+    id: 1, label: "Phase 1", title: "Absolute Foundations",
+    weeks: "1–6", duration: "6 weeks",
+    color: "#6378ff", emoji: "🌱",
+    desc: "Build unbreakable fundamentals. CS theory, Python mastery, Git, terminal. The base every recruiter expects.",
+    chips: [
+      {text:"Python",color:"#a5b4fc"},{text:"Git & GitHub",color:"#86efac"},
+      {text:"Linux CLI",color:"#fcd34d"},{text:"CS Theory",color:"#d8b4fe"}
+    ],
+    weeks_data: [
+      {
+        num: 1, title: "Computer Science Foundations + Dev Environment",
+        subtitle: "Setup your battlefield. Understand HOW computers really work.",
+        days: [
+          { title:"Install & Configure Dev Environment", desc:"VS Code, Python 3.12, Git, WSL/Terminal, Node.js. Create GitHub account. Configure SSH keys.", tags:["build"], trick:"Set up everything in one session. Refer to official docs — 'learn to read docs' is skill #1.", hours:"4h" },
+          { title:"How Computers Work: Binary, Memory, CPU", desc:"Binary/hex, RAM vs CPU vs storage, OS basics. Watch Crash Course CS episodes 1-3.", tags:["learn","review"], trick:"Create Anki cards for: binary, RAM, CPU cycle, OS scheduler. 5 cards today.", hours:"5h" },
+          { title:"Data Structures Part 1: Arrays & Linked Lists", desc:"Implement array and linked list in Python from scratch. Visualize memory allocation.", tags:["learn","build"], trick:"Draw diagrams on paper first. Feynman: explain to yourself why linked list insert is O(1).", hours:"5h" },
+          { title:"Data Structures Part 2: Stacks, Queues, Hash Maps", desc:"Implement each from scratch. Solve 3 easy LeetCode problems using each.", tags:["learn","practice"], trick:"LeetCode: Two Sum, Valid Parentheses, Contains Duplicate. Timer on — simulate real pressure.", hours:"5h" },
+          { title:"Git Mastery: Version Control Deep Dive", desc:"init, clone, add, commit, push, branch, merge, rebase, stash, PR workflow. Build a sample project and push to GitHub.", tags:["build","learn"], trick:"Create a public repo today. Future employers WILL check it. Every day from now: commit something.", hours:"5h" },
+        ]
+      },
+      {
+        num: 2, title: "Python Mastery: From Basics to Pythonic Code",
+        subtitle: "Python is the universal language of AI, Data, and DevOps. Master it deeply.",
+        days: [
+          { title:"Python Core: Variables, Loops, Functions, OOP", desc:"Write 10 functions solving real problems. Understand mutable vs immutable. Classes, __init__, self.", tags:["learn","practice"], trick:"Challenge: rewrite any phone tool you use (calculator, todo list) in Python CLI. Real motivation.", hours:"5h" },
+          { title:"Python Advanced: Decorators, Context Managers, Generators", desc:"Learn with @property, @staticmethod, with statements, yield. Write a lazy file reader using generator.", tags:["learn","build"], trick:"Feynman: explain 'generator' vs 'list' with a real-world analogy (assembly line vs warehouse).", hours:"5h" },
+          { title:"Python OOP Project: Build a Library System", desc:"Classes: Book, Member, Library with borrow/return logic. Use inheritance. Write to JSON.", tags:["build","project"], trick:"Commit this project to GitHub with a proper README. First portfolio piece!", hours:"5h" },
+          { title:"Python Data Handling: Files, JSON, CSV, APIs", desc:"Read/write files, parse JSON & CSV, make your first HTTP request with requests library. Consume a public API.", tags:["build","learn"], trick:"Use OpenWeather or CoinGecko free API. Build a weather CLI tool.", hours:"5h" },
+          { title:"Python Testing & Code Quality", desc:"unittest, pytest basics. Write tests for your Library System. Use Black formatter and Flake8 linter.", tags:["build","practice"], trick:"Pro move: TDD (Test Driven Development) — write test first, then code. Used at every big tech company.", hours:"4h" },
+        ]
+      },
+      {
+        num: 3, title: "SQL & Databases: The Language Recruiters Always Test",
+        subtitle: "SQL is tested in 90% of tech interviews. Data is everywhere — own it.",
+        days: [
+          { title:"SQL Fundamentals: SELECT, WHERE, JOIN, GROUP BY", desc:"Install PostgreSQL. Create tables, insert data, write 20 queries. Join at least 3 tables.", tags:["learn","practice"], trick:"Use a real dataset (Netflix shows, Spotify data from Kaggle). Make it interesting.", hours:"5h" },
+          { title:"Advanced SQL: CTEs, Window Functions, Indexing", desc:"WITH clauses, ROW_NUMBER(), RANK(), PARTITION BY, query optimization. Explain plan.", tags:["learn","practice"], trick:"Window functions are asked in 80% of data engineer interviews. Master this day.", hours:"5h" },
+          { title:"Database Design: ERD, Normalization, Relationships", desc:"Design a Twitter-like schema. 1NF/2NF/3NF, foreign keys, indexes, constraints.", tags:["learn","build"], trick:"Draw ERD on paper. Recruiting test: 'Design the database for Uber' — practiced exactly this.", hours:"5h" },
+          { title:"NoSQL: MongoDB Basics + Use Cases", desc:"When to use SQL vs NoSQL. Install MongoDB. CRUD a document store for a blogging platform.", tags:["learn","build"], trick:"Rule of thumb: user-facing apps → NoSQL for flexibility. Analytics → SQL for power.", hours:"5h" },
+          { title:"SQL Projects: Build an Analytics Dashboard Query Set", desc:"Dataset: e-commerce orders. Write 10 complex analytical queries. Cohort analysis, retention, revenue.", tags:["project","build"], trick:"This exact project on GitHub with README demonstrates real data analyst skills.", hours:"4h" },
+        ]
+      },
+      {
+        num: 4, title: "Web Fundamentals + React: The Frontend Foundation",
+        subtitle: "Every tech interview has a frontend component. React is the standard.",
+        days: [
+          { title:"HTML5 & CSS3: Semantic Structure + Modern Layouts", desc:"Semantic HTML, Flexbox, CSS Grid, responsive design. Build a personal portfolio page.", tags:["learn","build"], trick:"Use CSS Grid for layout, Flexbox for components. Non-negotiable rule for 2025.", hours:"5h" },
+          { title:"JavaScript ES6+ Core Concepts", desc:"const/let, arrow functions, destructuring, spread/rest, modules, async/await, Promises.", tags:["learn","practice"], trick:"Master async/await completely. It's the most common JS interview topic. Build 5 tiny exercises.", hours:"5h" },
+          { title:"React Part 1: Components, Props, State, Hooks", desc:"Build a Task Manager app with useState, useEffect. Functional components only. Props drilling.", tags:["build","learn"], trick:"Build real apps, not tutorials. The Task Manager app is portfolio-worthy.", hours:"6h" },
+          { title:"React Part 2: Context, useReducer, React Router", desc:"Multi-page app with routing. State management with Context API. Add authentication flow.", tags:["build","learn"], trick:"Implement a login/logout flow. Every startup app needs auth. You'll reuse this pattern.", hours:"6h" },
+          { title:"React Project: Personal Portfolio Website", desc:"Deploy your portfolio site. Include: About, Projects, Skills, Contact. Use GitHub Pages or Vercel.", tags:["project","deploy"], trick:"LIVE URL on resume = instant credibility. Deploy to Vercel in 5 min. Free forever.", hours:"3h" },
+        ]
+      },
+      {
+        num: 5, title: "Python Backend: FastAPI + REST APIs",
+        subtitle: "Backend APIs are the backbone of every tech product. FastAPI is the fastest-growing Python framework.",
+        days: [
+          { title:"HTTP, REST APIs, JSON: How the Web Works", desc:"HTTP methods, status codes, headers, REST principles, JSON structure. Use Postman to test public APIs.", tags:["learn"], trick:"Postman is used daily by every backend developer. Set it up and test 3 public APIs today.", hours:"4h" },
+          { title:"FastAPI Part 1: Routes, Request Models, Pydantic", desc:"Build a TODO API with CRUD. Pydantic validation, path/query params, request bodies.", tags:["build","learn"], trick:"FastAPI auto-generates Swagger docs. Show this to any recruiter — they'll be impressed.", hours:"6h" },
+          { title:"FastAPI Part 2: Authentication, JWT, Middleware", desc:"Implement JWT auth, OAuth2 with Password Flow, CORS middleware, rate limiting.", tags:["build","learn"], trick:"Every production API has auth. Build this pattern once by heart — reuse it forever.", hours:"6h" },
+          { title:"Connect FastAPI to PostgreSQL (SQLAlchemy + Alembic)", desc:"ORM models, relationships, async DB queries, database migrations.", tags:["build","learn"], trick:"Alembic is migration tool. Never delete DB columns manually. Master this.", hours:"6h" },
+          { title:"Deploy Your First API to the Cloud", desc:"Deploy FastAPI app to Railway or Render. Set up environment variables, SSL. Share the live URL.", tags:["deploy","project"], trick:"LIVE API URL on GitHub README = 10× more recruiter attention. Do this today.", hours:"3h" },
+        ]
+      },
+      {
+        num: 6, title: "DSA & Problem Solving: Beat the Technical Interview",
+        subtitle: "Data Structures & Algorithms are tested at every FAANG interview. Non-negotiable.",
+        days: [
+          { title:"Big O Notation + Sorting Algorithms", desc:"O(n), O(log n), O(n²). Implement Merge Sort, Quick Sort, Binary Search. Analyze time/space complexity.", tags:["learn","practice"], trick:"Draw time-complexity graphs. Visual memory is 3× stronger. Every interview opens with Big O.", hours:"5h" },
+          { title:"Trees: Binary Trees, BST, DFS, BFS", desc:"Implement BST, in-order/pre-order/post-order traversal, BFS with queue. Solve 5 LeetCode tree problems.", tags:["learn","practice"], trick:"LeetCode: Maximum Depth, Symmetric Tree, Binary Tree Level Order Traversal, Path Sum.", hours:"5h" },
+          { title:"Graphs: DFS, BFS, Topological Sort", desc:"Adjacency list/matrix, DFS/BFS traversal, cycle detection, topological sort for DAGs.", tags:["learn","practice"], trick:"Real interview Q: 'Design a course scheduler' — that's topological sort. Visual graph drawing helps.", hours:"5h" },
+          { title:"Dynamic Programming: Top-Down & Bottom-Up", desc:"Memoization vs tabulation. Fibonacci, Knapsack, Longest Common Subsequence, Coin Change.", tags:["learn","practice"], trick:"DP is hardest topic. Use the template: state → transition → base case. Draw the table.", hours:"5h" },
+          { title:"Mock Technical Interview + Review", desc:"2 hours of LeetCode (1 medium, 1 hard). Record yourself explaining solutions aloud. Review week.", tags:["practice","review"], trick:"Talk through your approach BEFORE coding — interviewers care more about your thought process.", hours:"4h" },
+        ]
+      },
+    ]
+  },
+  {
+    id: 2, label: "Phase 2", title: "Cloud Engineering & DevOps",
+    weeks: "7–11", duration: "5 weeks",
+    color: "#00d4ff", emoji: "☁️",
+    desc: "Master AWS, Docker, Kubernetes, Terraform CI/CD. The backbone of every modern tech company.",
+    chips: [
+      {text:"AWS",color:"#fcd34d"},{text:"Docker",color:"#67e8f9"},
+      {text:"Kubernetes",color:"#a5b4fc"},{text:"Terraform",color:"#86efac"},
+      {text:"CI/CD",color:"#d8b4fe"}
+    ],
+    weeks_data: [
+      {
+        num: 7, title: "AWS Core: EC2, S3, IAM, VPC, Lambda",
+        subtitle: "AWS is in 80% of job descriptions. Master the fundamentals first.",
+        days: [
+          { title:"AWS Account Setup + IAM: Identity & Access Management", desc:"Create free tier account. IAM users, groups, policies, roles. MFA setup. Principle of least privilege.", tags:["build","learn"], trick:"Use AWS free tier for everything. NEVER store credentials in code — use IAM roles.", hours:"4h" },
+          { title:"EC2 & Networking: Virtual Machines in the Cloud", desc:"Launch EC2 instance, SSH in, install software, security groups, elastic IPs. VPC, subnets, routing.", tags:["build","learn"], trick:"Launch a t2.micro, host your FastAPI app on it. Real cloud deployment!", hours:"6h" },
+          { title:"S3: Object Storage for Everything", desc:"Buckets, versioning, lifecycle policies, static website hosting, pre-signed URLs. Use boto3 in Python.", tags:["build","learn"], trick:"S3 is used in EVERY AWS architecture. Build automation: Python script to backup files to S3.", hours:"5h" },
+          { title:"Lambda + API Gateway: Serverless Architecture", desc:"Write Lambda functions, connect to API Gateway, create serverless REST endpoint. Triggers and events.", tags:["build","learn"], trick:"Serverless is the future. No servers = no maintenance. Build a URL shortener as Lambda.", hours:"6h" },
+          { title:"RDS + DynamoDB: Managed Databases on AWS", desc:"Launch PostgreSQL on RDS. Create DynamoDB table. Connect applications. Backup and restore.", tags:["build","learn"], trick:"Never run DB on EC2 in prod. Always use managed RDS. This is what interviewers check for.", hours:"3h" },
+        ]
+      },
+      {
+        num: 8, title: "Docker: Containerization Mastery",
+        subtitle: "Docker is the #1 most-listed cloud skill after AWS. Every company uses containers.",
+        days: [
+          { title:"Docker Core: Images, Containers, Volumes, Networks", desc:"docker run, build, ps, stop, rm. Dockerfile anatomy. Volumes for persistence. Networks for service communication.", tags:["learn","build"], trick:"Mental model: Image = recipe, Container = running dish. Never forget this analogy.", hours:"5h" },
+          { title:"Write Optimized Dockerfiles for Python & Node apps", desc:"Multi-stage builds, .dockerignore, layer caching, non-root user, health checks. Minimize image size.", tags:["build","practice"], trick:"Profile image size before/after optimization. Goal: go from 1GB to under 100MB. Real skill.", hours:"5h" },
+          { title:"Docker Compose: Multi-Container Applications", desc:"docker-compose.yml for: web app + PostgreSQL + Redis + Nginx. Environment variables, depends_on.", tags:["build","learn"], trick:"This skill alone is asked in 70% of backend interviews. Build the full 4-service compose file.", hours:"6h" },
+          { title:"Docker + CI/CD: Build and Push to Docker Hub/ECR", desc:"Automate Docker build → push → deploy with GitHub Actions. Tag images with commit SHA.", tags:["deploy","build"], trick:"From push to live in 5 minutes automatically. This is DevOps. Show this in interviews.", hours:"6h" },
+          { title:"Docker Project: Containerize Your Portfolio API", desc:"Put your FastAPI app + PostgreSQL in Docker Compose. Push to Docker Hub. Document everything.", tags:["project","deploy"], trick:"GitHub repo with docker-compose.yml and a one-command startup = serious developer signal.", hours:"3h" },
+        ]
+      },
+      {
+        num: 9, title: "Kubernetes: Container Orchestration",
+        subtitle: "Kubernetes is the most in-demand DevOps skill. $150K+ roles require it.",
+        days: [
+          { title:"K8s Core Concepts: Pods, Deployments, Services, Ingress", desc:"minikube setup. kubectl commands. Pod lifecycle, Deployments with replicas, ClusterIP/NodePort/LoadBalancer.", tags:["learn","build"], trick:"Draw the K8s architecture: Node → Pod → Container. Visualize it. Feynman it out.", hours:"5h" },
+          { title:"K8s Config: ConfigMaps, Secrets, Namespaces, RBAC", desc:"Store config and secrets properly. Namespace isolation. Role-based access. Never hardcode secrets!", tags:["learn","build"], trick:"Security red flag: secrets in env vars in YAML without proper K8s Secrets. Show you know better.", hours:"5h" },
+          { title:"K8s Scaling: HPA, Resource Limits, Health Probes", desc:"Horizontal Pod Autoscaler, liveness/readiness probes, resource requests/limits, rolling updates.", tags:["learn","build"], trick:"HPA is how Netflix serves 200M users. Simulate load with k6 or hey and watch pods scale.", hours:"6h" },
+          { title:"Helm: Kubernetes Package Manager", desc:"Install Helm, use a chart (nginx-ingress), write your own chart for your app. Values, templates.", tags:["build","learn"], trick:"Helm is how teams manage K8s configs. Knowing Helm = senior-level signal.", hours:"6h" },
+          { title:"K8s Project: Deploy Full Stack App to K8s", desc:"Deploy: FastAPI + PostgreSQL + React on minikube then EKS (AWS). Full Ingress + TLS.", tags:["project","deploy"], trick:"EKS deployment is expensive but a 1-hour demo is free. Do it, screenshot it, delete cluster.", hours:"3h" },
+        ]
+      },
+      {
+        num: 10, title: "Terraform & Infrastructure as Code",
+        subtitle: "IaC is how mature teams manage cloud. Terraform is the industry standard.",
+        days: [
+          { title:"Terraform Fundamentals: Providers, Resources, State", desc:"Install Terraform. Write first config to create AWS S3 bucket and EC2. terraform init/plan/apply/destroy.", tags:["learn","build"], trick:"State file = source of truth. NEVER delete terraform.tfstate. Commit it (encrypted) to git.", hours:"5h" },
+          { title:"Terraform Modules & Remote State", desc:"Create reusable modules for VPC, EC2, RDS. Store state in S3 with DynamoDB locking.", tags:["build","learn"], trick:"Modules are the functions of infrastructure. One module = one VPC. Reuse across environments.", hours:"6h" },
+          { title:"Terraform + CI/CD: Automated Infrastructure", desc:"GitHub Actions pipeline: terraform fmt → validate → plan (on PR) → apply (on merge to main).", tags:["build","deploy"], trick:"This is GitOps. Infrastructure as PR reviews. Very impressive to show interviewers.", hours:"6h" },
+          { title:"Ansible: Configuration Management", desc:"Install Ansible. Playbooks to configure EC2 servers (install packages, set up users, deploy app).", tags:["learn","build"], trick:"Terraform builds the server, Ansible configures it. Often these two are used together.", hours:"5h" },
+          { title:"IaC Project: Full AWS Infrastructure as Code", desc:"Terraform: VPC + EC2 + RDS + S3 + CloudFront + IAM. One terraform apply = complete production env.", tags:["project","deploy"], trick:"This repo on GitHub shows senior-level infrastructure thinking. Recruiters at AWS love this.", hours:"3h" },
+        ]
+      },
+      {
+        num: 11, title: "Observability: Monitoring, Logging, Alerting",
+        subtitle: "You can't manage what you can't measure. Production systems need full observability.",
+        days: [
+          { title:"Prometheus + Grafana: Metrics & Dashboards", desc:"Deploy Prometheus stack with Helm. Instrument Python app with prometheus_client. Build Grafana dashboard.", tags:["build","learn"], trick:"Grafana dashboard = screenshot for portfolio. 'I built a monitoring system' is elite level story.", hours:"5h" },
+          { title:"ELK Stack: Elasticsearch, Logstash, Kibana", desc:"Ship application logs to ELK. Create Kibana dashboards. Log structured JSON from FastAPI.", tags:["build","learn"], trick:"Structured logs (JSON) vs unstructured (print statements). Always use structured in production.", hours:"5h" },
+          { title:"Distributed Tracing: Jaeger / OpenTelemetry", desc:"Instrument your app with OpenTelemetry. Trace requests across microservices. Identify bottlenecks.", tags:["build","learn"], trick:"This is what separates junior devs from senior. 'How would you debug latency?' → tracing.", hours:"5h" },
+          { title:"SRE Concepts: SLI, SLO, SLA, Error Budgets", desc:"Define SLIs/SLOs for your app (99.9% uptime, <200ms P99). Alerting rules in Prometheus.", tags:["learn"], trick:"Google's SRE book is free online. Chapter 4 alone is interview gold. Read it.", hours:"5h" },
+          { title:"Observability Project: Full Production-Ready Stack", desc:"Complete observability for your app: metrics + logs + traces + alerts. Document runbooks.", tags:["project","review"], trick:"Document a fake 'incident response'. Recruiters at PagerDuty and Datadog go wild for this.", hours:"4h" },
+        ]
+      },
+    ]
+  },
+  {
+    id: 3, label: "Phase 3", title: "AI & Machine Learning",
+    weeks: "12–17", duration: "6 weeks",
+    color: "#a855f7", emoji: "🤖",
+    desc: "The highest-value skills of 2025. AI Engineers command $180K+. Build production AI systems.",
+    chips: [
+      {text:"PyTorch",color:"#d8b4fe"},{text:"LLMs",color:"#a5b4fc"},
+      {text:"LangChain",color:"#86efac"},{text:"RAG",color:"#67e8f9"},
+      {text:"MLOps",color:"#fcd34d"}
+    ],
+    weeks_data: [
+      {
+        num: 12, title: "Machine Learning Foundations",
+        subtitle: "Before you use AI, understand the math and intuition behind it.",
+        days: [
+          { title:"NumPy & Pandas: Data Manipulation Mastery", desc:"Array operations, broadcasting, DataFrame operations, groupby, merge, pivot. Load and clean a real dataset.", tags:["learn","practice"], trick:"Kaggle has 1000s of free datasets. Pick something you care about. Data about cricket, movies, stocks.", hours:"5h" },
+          { title:"Machine Learning Theory: Supervised vs Unsupervised", desc:"Linear regression, logistic regression, decision trees, k-means clustering. Math intuition only, no memorization.", tags:["learn"], trick:"Scikit-learn's diagrams are world-class. Use them as your cheatsheet. Bookmark the docs.", hours:"5h" },
+          { title:"Scikit-learn: Build Your First ML Pipeline", desc:"Load dataset, preprocess (StandardScaler, OneHotEncoder), train model, evaluate (accuracy, F1, AUC).", tags:["build","learn"], trick:"Use Pipeline class. It prevents data leakage (common exam mistake and real bug).", hours:"5h" },
+          { title:"Model Evaluation: Cross-Validation, Overfitting, Hyperparameter Tuning", desc:"K-fold CV, bias-variance tradeoff, GridSearchCV, RandomSearchCV, learning curves.", tags:["learn","practice"], trick:"Overfitting is THE most common ML bug. Always plot learning curves before shipping a model.", hours:"5h" },
+          { title:"ML Project: End-to-End Churn Prediction Model", desc:"EDA → Feature Engineering → Model Training → Evaluation → Joblib serialization → Flask endpoint.", tags:["project","build"], trick:"Wrap in Flask/FastAPI and deploy to cloud. 'Live ML API' on resume > academic project.", hours:"4h" },
+        ]
+      },
+      {
+        num: 13, title: "Deep Learning: Neural Networks & PyTorch",
+        subtitle: "PyTorch powers most AI research and production at Facebook, Tesla, OpenAI.",
+        days: [
+          { title:"Neural Network Theory: Neurons, Layers, Backpropagation", desc:"Perceptron, activation functions (ReLU, sigmoid), forward pass, loss, gradient descent, backprop.", tags:["learn"], trick:"3Blue1Brown's Neural Network series on YouTube (4 videos, 1hr total). Best visual explanation ever.", hours:"4h" },
+          { title:"PyTorch Core: Tensors, Autograd, Datasets, DataLoaders", desc:"Tensor operations, automatic differentiation, custom Dataset class, batching, transforms.", tags:["learn","build"], trick:"PyTorch tutorial on pytorch.org is exceptional. Always start from official docs.", hours:"6h" },
+          { title:"Train Your First CNN: Image Classification", desc:"Build CNN to classify CIFAR-10 (or MNIST). Conv2d, MaxPool, BatchNorm, Dropout, training loop.", tags:["build","learn"], trick:"Use GPU (Colab free T4 GPU). Training on CPU for vision = 10× slower. Go to Colab now.", hours:"6h" },
+          { title:"Transfer Learning: Use Pre-Trained Models", desc:"Load ResNet50 from torchvision. Freeze base layers. Fine-tune on custom dataset (5 classes of your choice).", tags:["build","learn"], trick:"This is how production vision AI works. No company trains from scratch. Transfer learning is Day 1.", hours:"6h" },
+          { title:"PyTorch Project: Custom Image Classifier App", desc:"Finetune a model on your own dataset. Build a FastAPI endpoint. Add a React UI to upload images.", tags:["project","deploy"], trick:"Working AI web app = top 1% of candidates applying for AI engineer roles. Deploy it.", hours:"3h" },
+        ]
+      },
+      {
+        num: 14, title: "Large Language Models (LLMs): The Core Skill of 2025",
+        subtitle: "LLMs are the center of the AI economy. Every company is building with them.",
+        days: [
+          { title:"Transformers Architecture: Attention Mechanism Deep Dive", desc:"Self-attention, multi-head attention, positional encoding, encoder-decoder. Read 'Attention Is All You Need' (key parts).", tags:["learn"], trick:"Jay Alammar's 'Illustrated Transformer' blog post is the best explanation. Read it twice.", hours:"5h" },
+          { title:"HuggingFace Transformers: Load + Use Pre-Trained Models", desc:"Load BERT, GPT-2, LLAMA for text classification, summarization, generation. Tokenizers and pipelines.", tags:["build","learn"], trick:"huggingface.co/spaces — deploy a demo for free in 5 minutes. Show it in interviews instantly.", hours:"6h" },
+          { title:"OpenAI API + Prompt Engineering Mastery", desc:"GPT-4o API. Few-shot prompting, chain-of-thought, structured outputs (JSON mode), system prompts.", tags:["build","learn"], trick:"Prompt engineering = write clear instructions. Best practice: roleplay + examples + constraints format.", hours:"5h" },
+          { title:"LangChain: Orchestrate LLM Applications", desc:"Chains, agents, tools, memory, output parsers. Build a document Q&A chatbot with conversation history.", tags:["build","learn"], trick:"LangChain has weekly updates. Learn the core concepts, not every feature. Concepts > syntax.", hours:"6h" },
+          { title:"Fine-Tuning LLMs: LoRA + QLoRA", desc:"Fine-tune a 7B model with QLoRA on Colab. Use a custom dataset. Understand PEFT concepts.", tags:["build","learn"], trick:"Fine-tuning with QLoRA makes 7B models run on 1 GPU. This alone is a $160K+ skill.", hours:"3h" },
+        ]
+      },
+      {
+        num: 15, title: "RAG Systems & Vector Databases",
+        subtitle: "RAG is the #1 production AI pattern. 90% of enterprise AI uses some form of RAG.",
+        days: [
+          { title:"Embeddings: How Machines Understand Meaning", desc:"Word2Vec intuition, OpenAI text-embedding-3-small, cosine similarity. Build semantic search from scratch.", tags:["learn","build"], trick:"Demo: embed 100 sentences. Search by meaning, not keyword. Instantly understand what recruiters want.", hours:"5h" },
+          { title:"Vector Databases: Pinecone, ChromaDB, Weaviate", desc:"Install ChromaDB locally. Store embeddings, query by similarity, filter metadata, manage collections.", tags:["build","learn"], trick:"Vector DB = long-term memory for AI. Without it, every chat starts fresh. Explain this in interviews.", hours:"6h" },
+          { title:"Build a RAG Pipeline from Scratch", desc:"PDF loader → text splitter → embeddings → vector store → retrieval → generation. No framework, pure Python.", tags:["build","project"], trick:"Building RAG from scratch > using LangChain's RAG. You'll understand every failure mode.", hours:"6h" },
+          { title:"Advanced RAG: Reranking, Hybrid Search, Evaluation", desc:"BM25 + semantic hybrid search, Cohere reranker, RAGAs evaluation framework for answer quality.", tags:["build","learn"], trick:"Production RAG fails silently. RAGAs metrics (faithfulness, relevance) catch this early.", hours:"5h" },
+          { title:"RAG Project: Enterprise Document Assistant", desc:"Upload any PDF → ask questions → get cited answers. FastAPI + ChromaDB + OpenAI + React UI. Deploy.", tags:["project","deploy"], trick:"This app is exactly what startup AI engineers build on Day 1. Literally job-simulation.", hours:"3h" },
+        ]
+      },
+      {
+        num: 16, title: "AI Agents: Agentic AI & Autonomous Systems",
+        subtitle: "AI Agents are the frontier of AI engineering. The highest-paying niche in 2025–2026.",
+        days: [
+          { title:"AI Agent Architecture: ReAct, Tool Use, Function Calling", desc:"ReAct pattern (Reason + Act). OpenAI function calling. LangChain agents with custom tools.", tags:["learn","build"], trick:"Build an agent that can: search the web, write to a file, call an API. 3 tools = real agent.", hours:"5h" },
+          { title:"Multi-Agent Systems: CrewAI & AutoGen", desc:"Multiple AI agents collaborating. Manager/worker pattern. Task delegation, parallel execution.", tags:["build","learn"], trick:"Multi-agent systems are what companies like Cognition (Devin AI) are building. Learn the pattern.", hours:"6h" },
+          { title:"Memory Systems: Short-term, Long-term, Episodic", desc:"In-context memory, vector DB memory, entity memory. Build a personal AI assistant with persistent memory.", tags:["build","learn"], trick:"Memory makes agents useful. Without memory: toy. With memory: product. This is the dividing line.", hours:"6h" },
+          { title:"AI Agent Tools: Web Search, Code Execution, Browser Control", desc:"Integrate Tavily search, Python REPL tool, Playwright for web automation into an agent.", tags:["build","learn"], trick:"Playwright-powered agents can fill forms, scrape dynamic sites, test your own app. Super power.", hours:"5h" },
+          { title:"Agent Project: AI Research Assistant", desc:"Agent that: plans, searches web, reads papers, synthesizes findings, writes structured report. Fully autonomous.", tags:["project","deploy"], trick:"Show this running live in an interview. No one else in the room will have built this.", hours:"3h" },
+        ]
+      },
+      {
+        num: 17, title: "MLOps: Taking AI to Production",
+        subtitle: "Building AI is 20% of the job. Getting it to production reliably is the other 80%.",
+        days: [
+          { title:"MLflow: Experiment Tracking & Model Registry", desc:"Track runs (params, metrics, artifacts). Model versioning, staging, production transitions. Compare experiments.", tags:["build","learn"], trick:"MLflow is how data science teams collaborate. Every serious ML team uses it. Must-know.", hours:"5h" },
+          { title:"Model Serving: BentoML, TorchServe, vLLM", desc:"Pack model as BentoService. Auto-generate Docker image. Serve PyTorch model via TorchServe with batching.", tags:["build","learn"], trick:"vLLM enables 10× faster LLM inference. Know how to set up a self-hosted LLM endpoint.", hours:"6h" },
+          { title:"Model Monitoring: Drift Detection & Retraining", desc:"Feature drift, label drift, Evidently AI for monitoring. Set up automated alerts and retraining triggers.", tags:["build","learn"], trick:"Models degrade silently in production. Drift detection catches it before users notice.", hours:"5h" },
+          { title:"Kubeflow / Vertex AI: End-to-End ML Pipelines", desc:"Build a pipeline: data ingestion → preprocessing → training → evaluation → deployment → monitoring.", tags:["build","learn"], trick:"Vertex AI on GCP is easiest managed MLOps. Use it for portfolio projects. GCP has free credits.", hours:"6h" },
+          { title:"MLOps Project: Automated ML Pipeline", desc:"GitHub Actions → data pull → training → evaluation gate → BentoML push → K8s deploy → monitor.", tags:["project","deploy"], trick:"This is a senior ML engineer's full stack. This project alone justifies a $140K+ salary.", hours:"3h" },
+        ]
+      },
+    ]
+  },
+  {
+    id: 4, label: "Phase 4", title: "Data Engineering at Scale",
+    weeks: "18–22", duration: "5 weeks",
+    color: "#10b981", emoji: "⚙️",
+    desc: "Build the pipelines that power AI. Data Engineers are the unsung heroes behind every AI system.",
+    chips: [
+      {text:"Apache Spark",color:"#86efac"},{text:"Kafka",color:"#6ee7b7"},
+      {text:"Airflow",color:"#fcd34d"},{text:"dbt",color:"#67e8f9"},
+      {text:"Snowflake",color:"#d8b4fe"}
+    ],
+    weeks_data: [
+      {
+        num: 18, title: "Apache Spark: Distributed Data Processing",
+        subtitle: "Spark powers data processing at Netflix, Uber, Airbnb, and every Fortune 500.",
+        days: [
+          { title:"Spark Fundamentals: RDDs, DataFrames, Spark SQL", desc:"Install PySpark. Understand DAG execution, lazy evaluation, partitioning. Transform large CSV datasets.", tags:["learn","build"], trick:"Databricks Community Edition = free Spark cluster. Don't install locally. Use cloud.", hours:"5h" },
+          { title:"Spark Streaming: Real-Time Data Processing", desc:"Structured Streaming. Read from Kafka, process events, output to Delta Lake. Watermarks and late data.", tags:["build","learn"], trick:"Spark Streaming + Kafka = the standard real-time architecture. This combo is in every senior DE JD.", hours:"6h" },
+          { title:"Spark Optimization: Partitioning, Caching, Broadcasting", desc:"Partition tuning, broadcast joins, cache vs persist, shuffle optimization. Analyze Spark UI.", tags:["learn","practice"], trick:"Spark UI is your debugger. Learn to read stage DAGs and identify shuffle bottlenecks.", hours:"5h" },
+          { title:"Delta Lake: ACID Transactions for Data Lakes", desc:"Time travel, MERGE (upsert), schema evolution, Z-ordering, data skipping. The lakehouse paradigm.", tags:["build","learn"], trick:"Delta Lake = Data Lake + Data Warehouse. The future of all data storage. Master it.", hours:"5h" },
+          { title:"Spark Project: Netflix-Style Recommendation Pipeline", desc:"Movie ratings data → Spark ALS collaborative filtering → recommendations API. Batch + serving.", tags:["project","build"], trick:"ALS in Spark is how Netflix used to power recommendations. Real-world, real scale.", hours:"4h" },
+        ]
+      },
+      {
+        num: 19, title: "Apache Kafka: Event Streaming",
+        subtitle: "Kafka is the real-time data backbone of LinkedIn, Uber, Airbnb, and Twitter.",
+        days: [
+          { title:"Kafka Architecture: Topics, Partitions, Consumer Groups", desc:"Brokers, producers, consumers, offsets. Deploy Kafka with Docker. Produce/consume messages in Python.", tags:["learn","build"], trick:"Kafka mental model: a distributed, fault-tolerant bulletin board. Publishers post, subscribers read.", hours:"5h" },
+          { title:"Kafka Streams: Real-Time Stream Processing", desc:"KStream, KTable, joins, aggregations, windowing, exactly-once semantics.", tags:["build","learn"], trick:"Kafka Streams vs Spark Streaming: use Kafka Streams for pure Kafka pipelines, Spark for mixed.", hours:"6h" },
+          { title:"Kafka Connect: Data Integration", desc:"Source connectors (PostgreSQL CDC), sink connectors (S3, Elasticsearch). Debezium for change data capture.", tags:["build","learn"], trick:"Debezium + Kafka = capture every DB change in real-time. This pattern is used at every bank.", hours:"5h" },
+          { title:"Kafka Schema Registry + Avro", desc:"Enforce schemas with Schema Registry. Avro serialization for compact, fast messaging.", tags:["build","learn"], trick:"Without schema registry: chaos. With it: stability. Senior DE interview Q: 'How do you manage schema evolution?'", hours:"5h" },
+          { title:"Kafka Project: Real-Time Fraud Detection Pipeline", desc:"Transaction events → Kafka → Spark Streaming → fraud model → alert to Redis → dashboard.", tags:["project","build"], trick:"Fraud detection pipeline is asked in 50% of Fintech DE interviews. You just built the answer.", hours:"4h" },
+        ]
+      },
+      {
+        num: 20, title: "Airflow & Workflow Orchestration",
+        subtitle: "Airflow schedules and monitors every production data pipeline. It's the nerve center.",
+        days: [
+          { title:"Airflow Core: DAGs, Operators, Tasks, XComs", desc:"Install Airflow with Docker Compose. Write your first DAG. PythonOperator, BashOperator, schedule_interval.", tags:["learn","build"], trick:"Airflow is just a scheduler with a UI and dependency management. Think cron on steroids.", hours:"5h" },
+          { title:"Airflow Advanced: TaskFlow API, Dynamic Tasks, Sensors", desc:"@task decorator, dynamic task generation, FileSensor, ExternalTaskSensor, SLA monitoring.", tags:["build","learn"], trick:"TaskFlow API (Airflow 2.x) is cleaner and more Pythonic. Always use it over classic operators.", hours:"5h" },
+          { title:"Airflow + Data Quality: Great Expectations", desc:"Validate data with Great Expectations. Fail pipeline on quality issues. Email/Slack alerts.", tags:["build","learn"], trick:"Data quality failures cost money. 'Our pipeline has 99.9% data quality' = recruiter attention.", hours:"5h" },
+          { title:"dbt: Data Build Tool for Analytics Engineering", desc:"dbt models, tests, documentation, sources, seeds, macros. Transform raw data to analytics-ready tables.", tags:["build","learn"], trick:"dbt = SQL + software engineering best practices. Every modern data team uses it.", hours:"6h" },
+          { title:"Orchestration Project: E-Commerce Analytics Pipeline", desc:"Airflow: ingest → Spark: transform → dbt: model → Snowflake: warehouse → Metabase: dashboard.", tags:["project","deploy"], trick:"This is a full modern data stack. Show this and you're immediately a senior DE candidate.", hours:"4h" },
+        ]
+      },
+      {
+        num: 21, title: "Cloud Data Warehousing: Snowflake + BigQuery",
+        subtitle: "Modern data warehouses handle petabytes. Learn the cloud-native query engines.",
+        days: [
+          { title:"Snowflake: Architecture, Virtual Warehouses, Time Travel", desc:"Create account (30-day trial). Load data. Understand Micro-partitioning, clustering, zero-copy cloning.", tags:["build","learn"], trick:"Snowflake separates compute from storage. Scale independently. This is its killer feature.", hours:"5h" },
+          { title:"Snowflake Advanced: Streams, Tasks, Snowpark", desc:"Change data capture with Streams. Schedule with Tasks. Python in Snowpark for ML in the warehouse.", tags:["build","learn"], trick:"Snowpark = Python UDFs in Snowflake. No more data movement to train models. Huge cost win.", hours:"5h" },
+          { title:"BigQuery: Google's Serverless Data Warehouse", desc:"GCP free tier. Load CSV to BigQuery. Partitioned tables, clustering, BI Engine, ML with BQML.", tags:["build","learn"], trick:"BigQuery is serverless. No clusters to manage. Pay-per-query. Perfect for startups and prototypes.", hours:"5h" },
+          { title:"Data Modeling: Star Schema, Dimensional Modeling, OBT", desc:"Fact tables, dimension tables, slowly changing dimensions (SCD Type 1/2), one big table pattern.", tags:["learn","build"], trick:"Star schema is the lingua franca of data warehousing. Draw it on a whiteboard in any interview.", hours:"5h" },
+          { title:"Warehouse Project: Business Intelligence Platform", desc:"Raw events → Snowflake staging → dbt models → star schema → Power BI / Looker dashboard.", tags:["project","deploy"], trick:"A live BI dashboard on your portfolio speaks louder than a resume bullet. Make it beautiful.", hours:"4h" },
+        ]
+      },
+      {
+        num: 22, title: "System Design: Designing at Scale",
+        subtitle: "System design is the final boss of senior tech interviews. Master it completely.",
+        days: [
+          { title:"System Design Fundamentals: CAP, Load Balancing, Caching", desc:"CAP theorem, consistency models, load balancers, Redis caching patterns, CDNs, sharding strategies.", tags:["learn"], trick:"Grokking System Design (paid) or System Design Primer (GitHub, free). 2 hours minimum today.", hours:"5h" },
+          { title:"Design Twitter/X: Real-Time Social Media at Scale", desc:"Feed generation (fan-out on write vs read), tweet storage, timeline service, notification system.", tags:["learn","practice"], trick:"In the interview: start with requirements → estimate scale → define APIs → component diagram → deep dive.", hours:"5h" },
+          { title:"Design a URL Shortener + Design Netflix CDN", desc:"URL shortener: hashing, redirect, analytics. Netflix: CDN, adaptive bitrate, regional caching.", tags:["learn","practice"], trick:"URL shortener is the most common system design warm-up question. Practice 3 times by heart.", hours:"5h" },
+          { title:"Design a Ride-Sharing System (Uber/Lyft)", desc:"Location streaming, matching algorithm, surge pricing, payment, notifications, trip management.", tags:["learn","practice"], trick:"This involves geospatial indexing (Geohash/QuadTree). Learn these — they appear in many rounds.", hours:"5h" },
+          { title:"Mock System Design Interview", desc:"Record yourself designing 'Design a distributed message queue like Kafka' in 45 minutes.", tags:["practice","review"], trick:"Timing is everything. Whiteboard structure: Req → Scale → APIs → Design → Trade-offs → Q&A.", hours:"4h" },
+        ]
+      },
+    ]
+  },
+  {
+    id: 5, label: "Phase 5", title: "Portfolio & Job Ready",
+    weeks: "23–26", duration: "4 weeks",
+    color: "#f59e0b", emoji: "🚀",
+    desc: "Polish your brand, build showcase projects, optimize resume for ATS, and launch the job hunt.",
+    chips: [
+      {text:"GitHub Portfolio",color:"#fcd34d"},{text:"Resume ATS",color:"#86efac"},
+      {text:"LinkedIn",color:"#67e8f9"},{text:"Networking",color:"#d8b4fe"},
+      {text:"Interview Prep",color:"#fca5a5"}
+    ],
+    weeks_data: [
+      {
+        num: 23, title: "Capstone Project 1: AI-Powered SaaS Application",
+        subtitle: "The crown jewel of your portfolio. A full-stack AI product that shows everything.",
+        days: [
+          { title:"Define & Architect Your Capstone SaaS Idea", desc:"Pick a real problem. Design the architecture: React + FastAPI + PostgreSQL + ChromaDB + AWS + CI/CD.", tags:["build","project"], trick:"Best capstone idea formula: [Industry] + AI = [time/cost saved]. Example: Legal doc scanner → saves 10hrs/contract.", hours:"6h" },
+          { title:"Build the AI Core: RAG + Custom Agent", desc:"Build the LLM backbone. Retrieval pipeline. Custom tools. Memory system. Test edge cases.", tags:["build","project"], trick:"Test with adversarial inputs. 'What happens if user uploads a corrupted file?' — handle it.", hours:"6h" },
+          { title:"Build the Full-Stack UI + API", desc:"React frontend with real-time streaming responses (SSE). FastAPI backend with auth, rate limiting, billing.", tags:["build","project"], trick:"Streaming responses (token-by-token like ChatGPT) are a WOW factor. Implement it.", hours:"6h" },
+          { title:"Docker + AWS Deployment + Domain + HTTPS", desc:"Dockerize everything. Deploy on AWS ECS. Register domain. CloudFront + SSL. Set up monitoring.", tags:["deploy","project"], trick:"Custom domain ($12/yr) makes it look 100× more professional. Do it. techyourname.ai", hours:"6h" },
+          { title:"Write Documentation + Record Demo Video", desc:"README with architecture diagram. API docs. 3-minute demo video (Loom). Deploy to Product Hunt.", tags:["project","review"], trick:"A demo video watched by a recruiter while reviewing your resume = automatic callback. Make it.", hours:"5h" },
+        ]
+      },
+      {
+        num: 24, title: "Capstone Project 2 + Resume & LinkedIn Optimization",
+        subtitle: "One more elite project + perfect your professional brand for maximum recruiter impact.",
+        days: [
+          { title:"Capstone Project 2: Data Pipeline + BI Dashboard", desc:"Full DE pipeline: Kafka → Spark → Snowflake → dbt → Grafana/Metabase. Pick a public dataset.", tags:["build","project"], trick:"Real-time dashboard showing live metrics. Business people LOVE dashboards. Makes tech tangible.", hours:"6h" },
+          { title:"Build Your ATS-Optimized Resume", desc:"Use STAR format bullets with numbers. Keyword-align to 5 target JDs. Quantify everything. One page.", tags:["build","review"], trick:"Rule: if it doesn't have a number (%, $, ×, hr saved), rewrite it. Weak: 'built API'. Strong: 'built API serving 50K daily requests'.", hours:"5h" },
+          { title:"LinkedIn Profile: All-Star Optimization", desc:"Professional headshot, bannerimage, headlineformula, featured section (demo videos), skills endorsements.", tags:["build","review"], trick:"LinkedIn headline formula: [Title] | [Top Skill] | [Top Skill] | [Value Prop]. 120 people search you per week after.", hours:"5h" },
+          { title:"GitHub Profile Optimization: README, Pinned Repos", desc:"GitHub profile README with animated banner. Pin 6 best repos. Each repo: README + demo GIF + live URL.", tags:["build","review"], trick:"Animated GIF of your app working = 5× more clicks than text. Use ScreenToGif (free) to record.", hours:"4h" },
+          { title:"Build a Personal Tech Blog (Dev.to / Hashnode)", desc:"Write 3 technical articles about things you built. 'How I built X with Y'. Publish and share.", tags:["build","review"], trick:"Writing about your projects = free, permanent, searchable social proof. Recruiters Google you.", hours:"4h" },
+        ]
+      },
+      {
+        num: 25, title: "Interview Preparation & Behavioral Mastery",
+        subtitle: "Technical skills get you the interview. Behavioral skills get you the offer.",
+        days: [
+          { title:"LeetCode Grind: Top 75 List — Easy & Medium", desc:"60 LeetCode problems from Blind 75 list. 4 problems/session. Timer on. 45 min per problem max.", tags:["practice"], trick:"Blind 75 list covers 90% of interview patterns. neetcode.io has solutions + explanations. Use it.", hours:"6h" },
+          { title:"Behavioral Interview: STAR Stories for Top 20 Questions", desc:"Write STAR answers for: leadership, conflict, failure, success, ambiguity, influence without authority.", tags:["practice","review"], trick:"Record yourself answering 5 times. Energy on camera = confidence. Monotone = rejected.", hours:"5h" },
+          { title:"Mock Technical Interview × 2 (Find a Partner or Pramp)", desc:"Use Pramp.com (free). 2 full 45-minute mock interviews. Feedback on problem-solving AND communication.", tags:["practice"], trick:"Pramp pairs you with a peer who also needs practice. Free. Effective. Do 3 sessions this week.", hours:"5h" },
+          { title:"Salary Negotiation Mastery", desc:"Research salaries (levels.fyi, Glassdoor, LinkedIn). Practice negotiation script. Counter-offer strategies.", tags:["learn","practice"], trick:"Never say a number first. Always say 'I want to make sure we're aligned on range'. Gets you +$15K on average.", hours:"4h" },
+          { title:"Job Application Blitz: 20 Targeted Applications", desc:"Apply to 20 jobs. Tailored resume per company. Personalized cover note (3 sentences). Track in Airtable.", tags:["practice","review"], trick:"Quality × 20 beats quantity × 200. Spend 30 min per application customizing. Response rate 5× higher.", hours:"5h" },
+        ]
+      },
+      {
+        num: 26, title: "Networking & The Job Search Engine",
+        subtitle: "80% of jobs are filled through referrals. Build your network systematically.",
+        days: [
+          { title:"Cold Outreach: LinkedIn DM Strategy at Scale", desc:"Message 10 engineers at target companies per day. Template: compliment work → specific question → coffee chat ask.", tags:["practice"], trick:"Template: 'Hi [name], your [specific project/article] on [topic] was insightful. I'm transitioning into [role]. Would you share your experience?'", hours:"4h" },
+          { title:"Tech Community: Discord, Twitter/X, Hackathons", desc:"Join 5 tech Discord communities. Post your projects on Twitter. Register for 1 hackathon.", tags:["build"], trick:"Hackathon wins = automatic recruiter bait. Even participating shows drive. 48 hours of hustle = 6 months of signaling.", hours:"4h" },
+          { title:"Open Source Contributions: Start Contributing", desc:"Find a beginner-friendly issue on GitHub (good-first-issue label). Fix a bug or add docs. Submit a PR.", tags:["build","project"], trick:"A merged PR to a famous repo (LangChain, FastAPI, Airflow) = name-drop in every interview.", hours:"5h" },
+          { title:"Recruiting Agencies + Tech Events", desc:"Register with 3 recruiting agencies (TEKsystems, Robert Half, Toptal). Attend a local tech meetup.", tags:["practice"], trick:"Recruiters at agencies work FOR you. They have JDs not on job boards. Worth 2 hours.", hours:"4h" },
+          { title:"Review + Reflect + Plan Next Phase", desc:"Review all projects. Update portfolio. Set interview targets for Month 7+. Celebrate wins (seriously).", tags:["review"], trick:"Track: applications sent, callbacks, interviews, offers. Data-driven job search wins.", hours:"3h" },
+        ]
+      },
+    ]
+  },
+  {
+    id: 6, label: "Phase 6", title: "Specialization & Mastery",
+    weeks: "27–36", duration: "10 weeks",
+    color: "#ef4444", emoji: "🏆",
+    desc: "Go deep on your chosen specialty. Get certified. Contribute to open source. Land the $120K–$200K+ role.",
+    chips: [
+      {text:"AWS Cert",color:"#fcd34d"},{text:"System Design",color:"#a5b4fc"},
+      {text:"Open Source",color:"#86efac"},{text:"Specialization",color:"#d8b4fe"},
+      {text:"Senior Path",color:"#fca5a5"}
+    ],
+    weeks_data: [
+      {
+        num: 27, title: "AWS Certifications: Solutions Architect Associate",
+        subtitle: "AWS SAA-C03 is the #1 most-cited cert in cloud job descriptions. Pass it this week.",
+        days: [
+          { title:"AWS SAA Exam Guide: Domains & Weightings", desc:"Map exam domains: Resilient Architectures (26%), High-Performing (24%), Security (30%), Cost-Optimized (20%).", tags:["learn","review"], trick:"Stephane Maarek's Udemy course (SAA-C03) is used by 1M+ students. 68 hours, covers everything.", hours:"6h" },
+          { title:"Practice Exams: 300+ questions with explanations", desc:"Jon Bonso's practice tests (6 full exams × 65 questions). Review every wrong answer. Build weakness list.", tags:["practice"], trick:"Target: 85%+ average on practice tests before sitting exam. This is the benchmark.", hours:"6h" },
+          { title:"Hands-on Labs: Build the Reference Architectures", desc:"Build every reference architecture from the exam: VPC with NAT, HA with ASG+ALB, serverless, multi-region.", tags:["build","learn"], trick:"Touching the services is 3× faster learning than reading about them. Spend half the day in AWS console.", hours:"6h" },
+          { title:"Book the Exam + Final Review", desc:"Schedule at Pearson VUE. Final review of weak areas. 2 hours of practice test. Rest and sleep well.", tags:["review","practice"], trick:"$150 exam fee. If you've done the work, you pass. Success rate with Maarek course: 90%+.", hours:"5h" },
+          { title:"Attempt Exam / Pre-Work for Advanced Cloud", desc:"Sit the SAA exam (or final prep). If passed — celebrate. Start reading for Data Analytics Specialty.", tags:["practice","review"], trick:"Post your cert on LinkedIn the minute you pass. Instant recruiter messages flood in.", hours:"3h" },
+        ]
+      },
+      {
+        num: 28, title: "Advanced Python: Async, Performance, Architecture",
+        subtitle: "Senior engineers write Production-grade Python. Go beyond syntax to architecture.",
+        days: [
+          { title:"Async Python: asyncio, aiohttp, Concurrent Futures", desc:"Event loops, coroutines, Tasks, gather, aiohttp for async HTTP. Benchmark vs synchronous.", tags:["learn","build"], trick:"Async Python can handle 1000 concurrent connections vs 10 synchronous. Know when to use each.", hours:"5h" },
+          { title:"Python Performance: Profiling + Optimization", desc:"cProfile, line_profiler, memory_profiler. Optimize a slow function 10× using profiling insights.", tags:["learn","practice"], trick:"'Make it work, make it right, make it fast' — Donald Knuth. Profile BEFORE you optimize.", hours:"5h" },
+          { title:"Python Architecture: Clean Architecture, SOLID Principles", desc:"Dependency injection, repository pattern, service layer, domain objects. Implement for your FastAPI app.", tags:["learn","build"], trick:"Clean Architecture makes code testable and maintainable. Senior interview: 'How do you structure a large Python project?'", hours:"5h" },
+          { title:"Python Packaging: Build and Publish Your Own Library", desc:"pyproject.toml, build, twine. Publish a utility package to PyPI. Set up CI for automated releases.", tags:["build","deploy"], trick:"A package you published on PyPI (even 50 downloads) = senior-level curiosity signal.", hours:"5h" },
+          { title:"Advanced Testing: Property-Based Testing + Load Testing", desc:"Hypothesis library (property-based), Locust for load testing. Test your API under 10,000 concurrent users.", tags:["build","practice"], trick:"Locust load test shows your API's breaking point. If you know it, you can fix it. No surprises in prod.", hours:"4h" },
+        ]
+      },
+      {
+        num: 29, title: "Security Engineering: DevSecOps & Threat Modeling",
+        subtitle: "Security is now everyone's job. Security-aware engineers earn 20% more.",
+        days: [
+          { title:"OWASP Top 10: Web Application Security Essentials", desc:"SQL injection, XSS, IDOR, SSRF, broken auth. Exploit each in a lab environment (WebGoat, DVWA).", tags:["learn","practice"], trick:"Understanding attacks makes you better at defense. Practice breaking things safely.", hours:"5h" },
+          { title:"Secrets Management: Vault, AWS Secrets Manager", desc:"Never hardcode secrets. Use Vault or AWS Secrets Manager. Rotate secrets automatically.", tags:["build","learn"], trick:"Assume your code will be leaked. If secrets are in env vars: bad. If they're in Vault: safe.", hours:"5h" },
+          { title:"Container Security: Image Scanning, Runtime Security", desc:"Trivy for image scanning. Falco for runtime anomaly detection. OPA Gatekeeper for K8s policies.", tags:["build","learn"], trick:"Trivy scans Docker images for CVEs in seconds. Add it to your CI pipeline. 30 min setup.", hours:"5h" },
+          { title:"Compliance as Code: CIS Benchmarks, SAST, DAST", desc:"Checkov/tfsec for IaC scanning. SonarQube for SAST. OWASP ZAP for DAST automation.", tags:["build","learn"], trick:"'Shift left security' = find bugs during development not production. This phrase impresses interviewers.", hours:"5h" },
+          { title:"Security Project: Secure Your Capstone App", desc:"Full security audit: SAST + DAST + container scan + secret management + WAF + security headers.", tags:["project","review"], trick:"Add a 'Security' section to your README. 'Application secured against OWASP Top 10' = rare resume flex.", hours:"4h" },
+        ]
+      },
+      {
+        num: 30, title: "Go Language: The Cloud-Native Language",
+        subtitle: "Go powers Kubernetes, Docker, Terraform, and most cloud-native tools. Learn it.",
+        days: [
+          { title:"Go Fundamentals: Syntax, Goroutines, Channels", desc:"Go tour (tour.golang.org). Goroutines, channels, select statement, WaitGroups. Concurrency model.", tags:["learn","build"], trick:"Go's concurrency model (goroutines) is simpler than Python's threading. Mental model: goroutine = lightweight thread.", hours:"5h" },
+          { title:"Go Web: net/http, Gin Framework, REST API", desc:"Build REST API with Gin. Middleware, authentication, routing, request validation. Benchmark vs Python.", tags:["build","learn"], trick:"Go API handles 5× more RPS than Python for the same hardware. Benchmark and show the numbers.", hours:"5h" },
+          { title:"Go + gRPC: High-Performance Microservices", desc:"Protocol Buffers, gRPC service definition, client/server, streaming. Build a gRPC service.", tags:["build","learn"], trick:"gRPC is used between microservices at Google/Netflix. Go + gRPC = the canonical microservice pattern.", hours:"5h" },
+          { title:"Go CLI Tools: Build Production CLIs with Cobra", desc:"Build a CLI tool with Cobra. Subcommands, flags, config files, colored output. Publish to GitHub.", tags:["build","project"], trick:"Many DevOps tools start as CLIs. kubectl, terraform, git — all CLIs. Build one, learn the pattern.", hours:"5h" },
+          { title:"Go Project: Build a Load Balancer from Scratch", desc:"Round-robin, least-connections, health checking, connection pooling. ~500 lines of idiomatic Go.", tags:["project","build"], trick:"This demonstrates deep systems understanding. 'I built a load balancer' is a conversation stopper.", hours:"4h" },
+        ]
+      },
+      {
+        num: 31, title: "Advanced System Design + Distributed Systems",
+        subtitle: "The final level. Staff/Principal and Architect roles live here.",
+        days: [
+          { title:"Distributed Consensus: Raft, Paxos, Leader Election", desc:"Understand Raft consensus algorithm. etcd (used in Kubernetes). Leader election patterns.", tags:["learn"], trick:"Read the Raft paper (students.raft.github.io). The animated visualization clarifies everything.", hours:"5h" },
+          { title:"Event-Driven Architecture: CQRS + Event Sourcing", desc:"Command/Query Responsibility Segregation. Event sourcing (Axon, EventStoreDB). Eventual consistency.", tags:["learn","build"], trick:"CQRS + Event Sourcing powers Shopify's checkout. Knowing it = Staff-level signal.", hours:"5h" },
+          { title:"Design Google Drive + Design WhatsApp", desc:"File storage, chunking, collaboration, conflict resolution. Messaging: delivery, read receipts, E2E encryption.", tags:["practice","learn"], trick:"These two cover: blob storage, WebSocket, message queues, consistency. Max coverage for one session.", hours:"5h" },
+          { title:"Design a Global Rate Limiter + Distributed Cache", desc:"Token bucket, sliding window. Redis Cluster, consistent hashing, cache eviction policies.", tags:["practice","learn"], trick:"Rate limiter design is asked at Stripe, Cloudflare, AWS. Cache design at every senior distributed systems round.", hours:"5h" },
+          { title:"Mock Staff-Level Design Interview + Full Review", desc:"Mock: Design a global-scale data platform (warehouse + real-time + AI). Record and review.", tags:["practice","review"], trick:"Staff engineers talk about trade-offs, not just solutions. Practice ending: 'If I had 6 months, I'd also add...'", hours:"4h" },
+        ]
+      },
+      {
+        num: 32, title: "Open Source + Community + Advanced Specialization",
+        subtitle: "The final acceleration. Build your network, your reputation, and your expertise.",
+        days: [
+          { title:"Choose Your Specialization Track: AI Engineer / Data Engineer / Cloud Architect", desc:"Review job market data. Choose your primary track. Set 3 target companies. Plan next 6 months.", tags:["review","learn"], trick:"T-shaped skills: be deep in 1 (primary), competent in 3 (secondary). Recruiters hire for depth.", hours:"4h" },
+          { title:"Open Source: Contribute to a Top Python/AI Project", desc:"Pick LangChain, FastAPI, Airflow, or PyTorch. Find an issue. Fix it. Submit quality PR.", tags:["build","project"], trick:"PR merged to a top-100 GitHub repo = conversation starter in every interview for 2 years.", hours:"6h" },
+          { title:"Technical Writing: Publish Deep-Dive Article", desc:"Write a 2,000+ word technical article. 'How I built [X] with [Y]. Performance, trade-offs, learnings.'", tags:["build","review"], trick:"Medium algorithm rewards articles with time-on-page. Diagrams + code = people stay, read, follow.", hours:"5h" },
+          { title:"Conference Talk Proposal + Community Teaching", desc:"Submit a talk proposal to PyData, KubeCon, AI Summit, or local meetup. Write the abstract.", tags:["build"], trick:"Speaking at a conference = 1000 LinkedIn followers in a week. Submit 5 conferences simultaneously.", hours:"4h" },
+          { title:"Final Review: Build Your Personal Brand OS", desc:"Audit everything: GitHub, LinkedIn, portfolio, resume, blog. Update all with new skills. Plan Month 9+.", tags:["review"], trick:"Google yourself. What do you find? By now: GitHub projects, LinkedIn, articles, maybe a GitHub star. That's your brand.", hours:"5h" },
+        ]
+      },
+    ]
+  },
+];
+
+const MILESTONES = [
+  { phase: "Month 2", title: "First GitHub Push", salary: "Portfolio Starts", color: "#6378ff", phase_n: 1 },
+  { phase: "Month 3", title: "Live Full-Stack App", salary: "Junior Ready", color: "#6378ff", phase_n: 1 },
+  { phase: "Month 5", title: "Cloud + Docker", salary: "$80K–$95K", color: "#00d4ff", phase_n: 2 },
+  { phase: "Month 6", title: "K8s + IaC + CI/CD", salary: "$95K–$115K", color: "#00d4ff", phase_n: 2 },
+  { phase: "Month 8", title: "AI Engineer Ready", salary: "$120K–$150K", color: "#a855f7", phase_n: 3 },
+  { phase: "Month 9", title: "RAG + Agents", salary: "$140K–$180K", color: "#a855f7", phase_n: 3 },
+  { phase: "Month 10", title: "Data Engineer", salary: "$130K–$165K", color: "#10b981", phase_n: 4 },
+  { phase: "Month 11", title: "System Design Ready", salary: "$150K–$200K+", color: "#f59e0b", phase_n: 5 },
+  { phase: "Month 12", title: "First Offer", salary: "🎉 JOB UNLOCKED", color: "#ef4444", phase_n: 6 },
+];
+
+// ═══════════════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════════════
+let checkedTasks = {};
+let checkedSubs = {};   // sub-task checkboxes inside expanded days
+let openWeeks = {};
+let openDays = {};      // which day panels are expanded
+let activePhase = 1;
+let streak = 0;
+let lastCheckDate = null;
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem('techMasteryState');
+    if (saved) {
+      const s = JSON.parse(saved);
+      checkedTasks = s.checkedTasks || {};
+      checkedSubs  = s.checkedSubs  || {};
+      openWeeks    = s.openWeeks    || {};
+      openDays     = s.openDays     || {};
+      streak       = s.streak       || 0;
+      lastCheckDate = s.lastCheckDate || null;
+    }
+  } catch(e) { console.warn('State load failed', e); }
+}
+function saveProgress() {
+  const state = { checkedTasks, checkedSubs, openWeeks, openDays, streak, lastCheckDate };
+  localStorage.setItem('techMasteryState', JSON.stringify(state));
+  const toast = document.getElementById('toast');
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2500);
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  DAY DETAIL GENERATOR
+// ═══════════════════════════════════════════════════════════════
+const RESOURCE_MAP = {
+  'Python':      [{icon:'📗',title:'Python Official Docs',url:'https://docs.python.org/3/',type:'docs'},{icon:'🎬',title:'CS50P – Python (Free)',url:'https://cs50.harvard.edu/python/',type:'course'},{icon:'📰',title:'Real Python Tutorials',url:'https://realpython.com',type:'articles'}],
+  'Git':         [{icon:'📘',title:'Pro Git Book (Free)',url:'https://git-scm.com/book',type:'book'},{icon:'🎬',title:'Git & GitHub Crash Course',url:'https://www.youtube.com/watch?v=RGOj5yH7evk',type:'video'},{icon:'🧪',title:'Learn Git Branching (Interactive)',url:'https://learngitbranching.js.org',type:'interactive'}],
+  'Binary':      [{icon:'🎬',title:'Crash Course CS – Binary',url:'https://www.youtube.com/watch?v=LpuPe81bc2w',type:'video'},{icon:'📘',title:'CS50 Week 0 Notes',url:'https://cs50.harvard.edu/x/2024/notes/0/',type:'notes'}],
+  'SQL':         [{icon:'🧪',title:'SQLZoo (Interactive SQL)',url:'https://sqlzoo.net',type:'interactive'},{icon:'📗',title:'PostgreSQL Official Docs',url:'https://www.postgresql.org/docs/',type:'docs'},{icon:'🎬',title:'SQL Tutorial for Beginners',url:'https://www.youtube.com/watch?v=HXV3zeQKqGY',type:'video'}],
+  'MongoDB':     [{icon:'📗',title:'MongoDB Docs',url:'https://www.mongodb.com/docs/',type:'docs'},{icon:'🎬',title:'MongoDB Crash Course',url:'https://www.youtube.com/watch?v=ofme2o29ngU',type:'video'}],
+  'HTML':        [{icon:'📗',title:'MDN Web Docs – HTML',url:'https://developer.mozilla.org/en-US/docs/Web/HTML',type:'docs'},{icon:'🎬',title:'HTML Full Course (freeCodeCamp)',url:'https://www.youtube.com/watch?v=pQN-pnXPaVg',type:'video'}],
+  'CSS':         [{icon:'📗',title:'MDN – Flexbox Guide',url:'https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_flexible_box_layout',type:'docs'},{icon:'🧪',title:'CSS Grid Garden',url:'https://cssgridgarden.com',type:'interactive'}],
+  'JavaScript':  [{icon:'📗',title:'javascript.info (The Modern JS Tutorial)',url:'https://javascript.info',type:'book'},{icon:'🎬',title:'JS Crash Course – Traversy Media',url:'https://www.youtube.com/watch?v=hdI2bqOjy3c',type:'video'}],
+  'React':       [{icon:'📗',title:'React Official Docs (New)',url:'https://react.dev',type:'docs'},{icon:'🎬',title:'React Full Course (freeCodeCamp)',url:'https://www.youtube.com/watch?v=bMknfKXIFA8',type:'video'},{icon:'🧪',title:'Scrimba React Course (Free)',url:'https://scrimba.com/learn/learnreact',type:'interactive'}],
+  'FastAPI':     [{icon:'📗',title:'FastAPI Official Docs',url:'https://fastapi.tiangolo.com',type:'docs'},{icon:'🎬',title:'FastAPI Tutorial – Tech With Tim',url:'https://www.youtube.com/watch?v=7t2alSnE2-I',type:'video'}],
+  'LeetCode':    [{icon:'🧪',title:'NeetCode 150 List',url:'https://neetcode.io/practice',type:'practice'},{icon:'🎬',title:'NeetCode YouTube Solutions',url:'https://www.youtube.com/@NeetCode',type:'video'},{icon:'🧪',title:'LeetCode (Login → Problems)',url:'https://leetcode.com/problemset/',type:'practice'}],
+  'AWS':         [{icon:'📗',title:'AWS Official Documentation',url:'https://docs.aws.amazon.com',type:'docs'},{icon:'🎬',title:'AWS Course – Stephane Maarek (Udemy)',url:'https://www.udemy.com/course/aws-certified-solutions-architect-associate-saa-c03/',type:'course'},{icon:'🧪',title:'AWS Free Tier Console',url:'https://aws.amazon.com/free/',type:'tool'}],
+  'Docker':      [{icon:'📗',title:'Docker Official Docs',url:'https://docs.docker.com',type:'docs'},{icon:'🎬',title:'Docker Tutorial – TechWorld with Nana',url:'https://www.youtube.com/watch?v=3c-iBn73dDE',type:'video'},{icon:'🧪',title:'Play With Docker (Free Browser Lab)',url:'https://labs.play-with-docker.com',type:'tool'}],
+  'Kubernetes':  [{icon:'📗',title:'Kubernetes Official Docs',url:'https://kubernetes.io/docs/',type:'docs'},{icon:'🎬',title:'K8s Tutorial – TechWorld with Nana',url:'https://www.youtube.com/watch?v=X48VuDVv0do',type:'video'},{icon:'🧪',title:'Killercoda K8s Labs (Free)',url:'https://killercoda.com/scenarios',type:'tool'}],
+  'Terraform':   [{icon:'📗',title:'Terraform Official Docs',url:'https://developer.hashicorp.com/terraform/docs',type:'docs'},{icon:'🎬',title:'Terraform Tutorial – TechWorld with Nana',url:'https://www.youtube.com/watch?v=l5k1ai_GBDE',type:'video'}],
+  'Prometheus':  [{icon:'📗',title:'Prometheus Docs',url:'https://prometheus.io/docs/',type:'docs'},{icon:'🎬',title:'Grafana + Prometheus Setup',url:'https://www.youtube.com/watch?v=9TJx7QTrTyo',type:'video'}],
+  'NumPy':       [{icon:'📗',title:'NumPy Quickstart',url:'https://numpy.org/doc/stable/user/quickstart.html',type:'docs'},{icon:'🎬',title:'NumPy Tutorial – Keith Galli',url:'https://www.youtube.com/watch?v=QUT1VHiLmmI',type:'video'}],
+  'PyTorch':     [{icon:'📗',title:'PyTorch Official Tutorials',url:'https://pytorch.org/tutorials/',type:'docs'},{icon:'🎬',title:'Neural Networks – 3Blue1Brown',url:'https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi',type:'video'},{icon:'🧪',title:'Google Colab (Free GPU)',url:'https://colab.research.google.com',type:'tool'}],
+  'LLM':         [{icon:'🎬',title:'Andrej Karpathy – Let’s build GPT',url:'https://www.youtube.com/watch?v=kCc8FmEb1nY',type:'video'},{icon:'📗',title:'HuggingFace Course (Free)',url:'https://huggingface.co/learn/nlp-course',type:'course'},{icon:'📗',title:'OpenAI API Docs',url:'https://platform.openai.com/docs',type:'docs'}],
+  'LangChain':   [{icon:'📗',title:'LangChain Docs',url:'https://python.langchain.com/docs/',type:'docs'},{icon:'🎬',title:'LangChain Crash Course',url:'https://www.youtube.com/watch?v=lG7Uxts9SXs',type:'video'},{icon:'📗',title:'DeepLearning.AI LangChain Course',url:'https://learn.deeplearning.ai/langchain',type:'course'}],
+  'RAG':         [{icon:'📗',title:'RAG Paper (original)',url:'https://arxiv.org/abs/2005.11401',type:'paper'},{icon:'🎬',title:'RAG from Scratch – LangChain',url:'https://www.youtube.com/watch?v=sVcwVQRHIc8',type:'video'}],
+  'Spark':       [{icon:'📗',title:'PySpark Docs',url:'https://spark.apache.org/docs/latest/api/python/',type:'docs'},{icon:'🧪',title:'Databricks Community Edition',url:'https://community.cloud.databricks.com',type:'tool'},{icon:'🎬',title:'PySpark Tutorial',url:'https://www.youtube.com/watch?v=_C8kWso4ne4',type:'video'}],
+  'Kafka':       [{icon:'📗',title:'Kafka Official Docs',url:'https://kafka.apache.org/documentation/',type:'docs'},{icon:'🎬',title:'Kafka Tutorial – Amigoscode',url:'https://www.youtube.com/watch?v=SqVfCyfCJqw',type:'video'}],
+  'Airflow':     [{icon:'📗',title:'Apache Airflow Docs',url:'https://airflow.apache.org/docs/',type:'docs'},{icon:'🎬',title:'Airflow Tutorial for Beginners',url:'https://www.youtube.com/watch?v=K9AnJ9_ZAXE',type:'video'}],
+  'default':     [{icon:'📗',title:'Official Docs (search topic)',url:'https://devdocs.io',type:'docs'},{icon:'🎬',title:'YouTube – search the topic + tutorial',url:'https://youtube.com',type:'video'},{icon:'🧪',title:'freeCodeCamp (Free Courses)',url:'https://www.freecodecamp.org',type:'interactive'}]
+};
+
+const CMD_MAP = {
+  'Install':     ['pip install --upgrade pip','python --version','git --version','node --version'],
+  'Git':         ['git init','git add .','git commit -m "feat: initial commit"','git push origin main'],
+  'Python':      ['python -m venv venv','source venv/bin/activate  # Mac/Linux','venv\\Scripts\\activate  # Windows','pip install -r requirements.txt'],
+  'SQL':         ['psql -U postgres','CREATE DATABASE mydb;','\\c mydb','\\dt  -- list tables'],
+  'Docker':      ['docker build -t myapp:latest .','docker run -p 8000:8000 myapp:latest','docker compose up -d','docker ps'],
+  'AWS':         ['aws configure','aws s3 ls','aws ec2 describe-instances','aws iam list-users'],
+  'Kubernetes':  ['minikube start','kubectl get pods -A','kubectl apply -f deployment.yaml','kubectl get svc'],
+  'Terraform':   ['terraform init','terraform plan','terraform apply -auto-approve','terraform destroy'],
+  'FastAPI':     ['pip install fastapi uvicorn','uvicorn main:app --reload --port 8000','curl http://localhost:8000/docs'],
+  'LangChain':   ['pip install langchain openai chromadb','export OPENAI_API_KEY="sk-..."','python agent.py'],
+  'Spark':       ['pip install pyspark','pyspark --version','spark-submit --master local[*] job.py'],
+  'Kafka':       ['docker compose up -d kafka zookeeper','kafka-topics.sh --create --topic events --bootstrap-server localhost:9092','kafka-console-producer.sh --topic events --bootstrap-server localhost:9092'],
+  'PyTorch':     ['pip install torch torchvision','python -c "import torch; print(torch.__version__)"','python train.py --epochs 10'],
+  'React':       ['npx create-react-app my-app','cd my-app && npm start','npm run build'],
+  'test':        ['pytest -v','pytest --cov=. --cov-report=html','black . && flake8 .'],
+  'deploy':      ['git push origin main','vercel --prod','docker push myrepo/myapp:latest']
+};
+
+function pickResources(title) {
+  const keys = Object.keys(RESOURCE_MAP).filter(k => k !== 'default');
+  const matches = keys.filter(k => title.toLowerCase().includes(k.toLowerCase()));
+  if (matches.length === 0) return RESOURCE_MAP['default'];
+  // merge up to 3 unique resources from matched categories
+  const out = [];
+  for (const m of matches) {
+    for (const r of RESOURCE_MAP[m]) {
+      if (!out.find(x => x.title === r.title)) out.push(r);
+      if (out.length >= 4) break;
+    }
+    if (out.length >= 4) break;
+  }
+  return out.length ? out : RESOURCE_MAP['default'];
+}
+
+function pickCommands(title, tags) {
+  const titleUp = title.toUpperCase();
+  const keys = Object.keys(CMD_MAP);
+  const match = keys.find(k => titleUp.includes(k.toUpperCase()));
+  if (match) return CMD_MAP[match];
+  if (tags.includes('deploy')) return CMD_MAP['deploy'];
+  if (tags.includes('build')) return CMD_MAP['Python'];
+  if (tags.includes('test'))  return CMD_MAP['test'];
+  return ['# Open your editor and follow the tasks below','# Each learning block = 1 Pomodoro (25 min)'];
+}
+
+function fmtTime(h) {
+  const hh = Math.floor(h);
+  const mm = Math.round((h - hh) * 60);
+  return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`;
+}
+
+function genSchedule(hrs, tags) {
+  const blocks = [];
+  let t = 0;
+  blocks.push({time: fmtTime(t)+' – '+fmtTime(t+0.25), task: '🧠 Anki review (yesterday\'s cards) + skim today\'s goal'});
+  t += 0.25;
+  if (tags.includes('learn')) {
+    const dur = Math.min(1.5, hrs * 0.35);
+    blocks.push({time: fmtTime(t)+' – '+fmtTime(t+dur), task: '📖 Study: read docs / watch tutorial (take notes in own words)'});
+    t += dur;
+    blocks.push({time: fmtTime(t)+' – '+fmtTime(t+0.25), task: '☕ Break — stand up, stretch, 5 deep breaths'});
+    t += 0.25;
+  }
+  if (tags.includes('build') || tags.includes('project')) {
+    const dur = Math.min(2.5, hrs * 0.45);
+    blocks.push({time: fmtTime(t)+' – '+fmtTime(t+dur), task: '💻 Code: implement from scratch — no copy-paste'});
+    t += dur;
+    blocks.push({time: fmtTime(t)+' – '+fmtTime(t+0.25), task: '☕ Break'});
+    t += 0.25;
+  }
+  if (tags.includes('practice')) {
+    const dur = Math.min(1.5, hrs * 0.35);
+    blocks.push({time: fmtTime(t)+' – '+fmtTime(t+dur), task: '🏋️ Practice: solve exercises / LeetCode problems'});
+    t += dur;
+    blocks.push({time: fmtTime(t)+' – '+fmtTime(t+0.25), task: '☕ Break'});
+    t += 0.25;
+  }
+  if (tags.includes('deploy')) {
+    const dur = Math.min(1, hrs * 0.25);
+    blocks.push({time: fmtTime(t)+' – '+fmtTime(t+dur), task: '🚀 Deploy: push to cloud, verify live URL works'});
+    t += dur;
+  }
+  if (tags.includes('review')) {
+    blocks.push({time: fmtTime(t)+' – '+fmtTime(t+0.5), task: '🔍 Review: flip through notes, summarize key learnings'});
+    t += 0.5;
+  }
+  blocks.push({time: 'End of session', task: '🃏 Create 3–5 Anki cards  •  git commit  •  update tracker'});
+  return blocks;
+}
+
+function genSubTasks(day) {
+  // Split desc by '. ' or ', ' to form independent action items
+  const raw = day.desc.split(/(?:\. |, )/).filter(s => s.trim().length > 6);
+  const items = [];
+  // Always prepend a warm-up task
+  items.push('Open your editor + terminal. Pull any pending git changes.');
+  raw.forEach(r => {
+    const t = r.trim().replace(/\.$/, '');
+    if (t.length > 8 && items.length < 7) items.push(t);
+  });
+  // Always end with a reflection task
+  items.push('Feynman check: explain today\'s main concept aloud in 60 seconds.');
+  return items.slice(0, 7);
+}
+
+function genDeliverable(day) {
+  const tag = day.tags[0] || 'learn';
+  const deliverables = {
+    build:    `A working <strong>${day.title.split(':')[0]}</strong> implementation pushed to your GitHub repo with a README describing what it does.`,
+    deploy:   `A <strong>live URL</strong> you can share with anyone — paste it in your portfolio README right now.`,
+    project:  `A <strong>completed project</strong> with code on GitHub + a README + (ideally) a live demo link.`,
+    practice: `At least <strong>3 solved problems</strong> with time complexity analysis written in comments.`,
+    learn:    `A page of <strong>handwritten or typed notes</strong> + 5 Anki cards added to your deck.`,
+    review:   `A <strong>summary document</strong> (even bullet points) of everything covered this week.`,
+    default:  `Evidence of today's work pushed to GitHub — commit message describes what you built or learned.`
+  };
+  return deliverables[tag] || deliverables.default;
+}
+
+function renderDayExpand(day, phaseColor, taskId) {
+  const schedule  = genSchedule(parseFloat(day.hours) || 4, day.tags);
+  const subtasks  = genSubTasks(day);
+  const resources = pickResources(day.title);
+  const commands  = pickCommands(day.title, day.tags);
+  const deliv     = genDeliverable(day);
+
+  const schedHTML = schedule.map(b =>
+    `<div class="sched-block"><span class="sched-time">${b.time}</span><span class="sched-task">${b.task}</span></div>`
+  ).join('');
+
+  const subHTML = subtasks.map((t, si) => {
+    const sid = `${taskId}_s${si}`;
+    const isDone = !!checkedSubs[sid];
+    return `<div class="subtask-item">
+      <div class="sub-check ${isDone?'done':''}" id="subc-${sid}" onclick="toggleSub('${sid}')">${isDone?'✓':''}</div>
+      <span class="sub-text ${isDone?'done':''}" id="subt-${sid}">${t}</span>
+    </div>`;
+  }).join('');
+
+  const resHTML = resources.map(r =>
+    `<div class="res-item">
+      <span class="res-icon">${r.icon}</span>
+      <div class="res-info">
+        <div class="res-title">${r.title}</div>
+        <div class="res-type">${r.type}</div>
+      </div>
+      <a href="${r.url}" target="_blank" rel="noopener" class="res-badge" onclick="event.stopPropagation()">Open →</a>
+    </div>`
+  ).join('');
+
+  const cmdHTML = commands.map(c =>
+    `<div class="cmd-block"><span class="cmd-prompt">$</span><span>${c}</span></div>`
+  ).join('');
+
+  return `
+  <div class="expand-grid">
+    <div class="expand-section">
+      <div class="expand-sec-title">⏱ Today's Schedule (${day.hours} total)</div>
+      <div class="sched-list">${schedHTML}</div>
+    </div>
+    <div class="expand-section">
+      <div class="expand-sec-title">✅ Step-by-Step Tasks</div>
+      <div class="subtask-list">${subHTML}</div>
+    </div>
+    <div class="expand-section">
+      <div class="expand-sec-title">💻 Commands to Run</div>
+      <div class="cmd-wrap">${cmdHTML}</div>
+    </div>
+    <div class="expand-section">
+      <div class="expand-sec-title">📚 Resources</div>
+      <div class="res-list">${resHTML}</div>
+    </div>
+    <div class="expand-section full">
+      <div class="expand-sec-title">🎯 Today's Deliverable</div>
+      <div class="deliverable-box"><div class="del-label">By end of session you should have:</div>${deliv}</div>
+    </div>
+  </div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  TASK ID GENERATION
+// ═══════════════════════════════════════════════════════════════
+function getTaskId(phaseId, weekNum, dayIdx) {
+  return `p${phaseId}_w${weekNum}_d${dayIdx}`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  STATS COMPUTATION
+// ═══════════════════════════════════════════════════════════════
+function computeStats() {
+  let total = 0;
+  let done = 0;
+  let hoursTotal = 0;
+  PHASES.forEach(phase => {
+    phase.weeks_data.forEach(week => {
+      week.days.forEach((day, di) => {
+        const id = getTaskId(phase.id, week.num, di);
+        const hrs = parseFloat(day.hours) || 0;
+        total++;
+        if (checkedTasks[id]) { done++; hoursTotal += hrs; }
+      });
+    });
+  });
+  return { total, done, hoursTotal: Math.round(hoursTotal) };
+}
+
+function updateStats() {
+  const { total, done, hoursTotal } = computeStats();
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById('progressPct').textContent = pct + '%';
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('completedTasks').textContent = done;
+  document.getElementById('totalTasks').textContent = total;
+  document.getElementById('streakCount').textContent = streak;
+  document.getElementById('hoursLogged').textContent = hoursTotal;
+  document.getElementById('headerProgress').textContent = pct + '% Complete';
+
+  // Milestone unlocks
+  const unlockedPhases = new Set();
+  PHASES.forEach(phase => {
+    let phDone = 0, phTotal = 0;
+    phase.weeks_data.forEach(week => {
+      week.days.forEach((day, di) => {
+        phTotal++;
+        if (checkedTasks[getTaskId(phase.id, week.num, di)]) phDone++;
+      });
+    });
+    if (phDone / phTotal >= 0.5) unlockedPhases.add(phase.id);
+  });
+  document.querySelectorAll('.milestone').forEach((el, i) => {
+    const m = MILESTONES[i];
+    if (m && unlockedPhases.has(m.phase_n)) {
+      el.classList.add('unlocked');
+      el.querySelector('.milestone-lock').textContent = '🏆';
+    }
+  });
+
+  updateWeekBars();
+}
+
+function updateWeekBars() {
+  PHASES.forEach(phase => {
+    phase.weeks_data.forEach(week => {
+      let done = 0;
+      week.days.forEach((day, di) => {
+        if (checkedTasks[getTaskId(phase.id, week.num, di)]) done++;
+      });
+      const pct = Math.round((done / week.days.length) * 100);
+      const bar = document.getElementById(`wbar-${phase.id}-${week.num}`);
+      const pctEl = document.getElementById(`wpct-${phase.id}-${week.num}`);
+      if (bar) bar.style.width = pct + '%';
+      if (pctEl) pctEl.textContent = pct + '%';
+
+      const card = document.getElementById(`wcard-${phase.id}-${week.num}`);
+      if (card) {
+        if (done === week.days.length) card.classList.add('completed');
+        else card.classList.remove('completed');
+      }
+    });
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════════════════════
+function renderTabs() {
+  const wrap = document.getElementById('tabsWrap');
+  wrap.innerHTML = PHASES.map(p => `
+    <button class="tab-btn ${p.id === activePhase ? 'active' : ''}"
+            onclick="switchPhase(${p.id})">
+      ${p.emoji} ${p.label}: ${p.title}
+    </button>
+  `).join('');
+}
+
+function renderPhases() {
+  const container = document.getElementById('phaseContent');
+  container.innerHTML = PHASES.map(phase => `
+    <div class="tab-panel ${phase.id === activePhase ? 'active' : ''}" id="panel-${phase.id}">
+      <div class="phase-header">
+        <div class="phase-badge" style="background:${phase.color}22;color:${phase.color}">
+          ${phase.emoji}
+        </div>
+        <div class="phase-meta">
+          <h3 style="color:${phase.color}">${phase.label}: ${phase.title}</h3>
+          <p>${phase.desc}</p>
+          <div class="phase-chips">
+            ${phase.chips.map(c=>`<span class="phase-chip" style="background:${c.color}22;color:${c.color}">${c.text}</span>`).join('')}
+            <span class="phase-chip" style="background:rgba(255,255,255,0.05);color:var(--text-muted)">📅 ${phase.duration}</span>
+            <span class="phase-chip" style="background:rgba(255,255,255,0.05);color:var(--text-muted)">Weeks ${phase.weeks}</span>
+          </div>
+        </div>
+      </div>
+      ${phase.weeks_data.map(week => renderWeek(phase, week)).join('')}
+    </div>
+  `).join('');
+}
+
+function renderWeek(phase, week) {
+  const color = phase.color;
+  const totalDays = week.days.length;
+  const done = week.days.filter((d,i) => checkedTasks[getTaskId(phase.id, week.num, i)]).length;
+  const pct = Math.round((done/totalDays)*100);
+  const isOpen = openWeeks[`${phase.id}-${week.num}`] || false;
+
+  return `
+  <div class="week-card ${done===totalDays?'completed':''} ${isOpen?'open':''}" id="wcard-${phase.id}-${week.num}">
+    <div class="week-header" onclick="toggleWeek('${phase.id}','${week.num}')">
+      <div class="week-num" style="background:${color}22;color:${color}">W${week.num}</div>
+      <div class="week-title">
+        <h4>${week.title}</h4>
+        <p>${week.subtitle}</p>
+      </div>
+      <div class="week-progress">
+        <div class="week-bar">
+          <div class="week-bar-fill" id="wbar-${phase.id}-${week.num}"
+               style="width:${pct}%;background:${color}"></div>
+        </div>
+        <span class="week-pct" id="wpct-${phase.id}-${week.num}">${pct}%</span>
+      </div>
+      <span class="chevron">▶</span>
+    </div>
+    <div class="day-list" style="${isOpen?'':'display:none'}" id="daylist-${phase.id}-${week.num}">
+      ${week.days.map((day, idx) => renderDay(phase, week, day, idx)).join('')}
+    </div>
+  </div>`;
+}
+
+function renderDay(phase, week, day, idx) {
+  const id = getTaskId(phase.id, week.num, idx);
+  const isDone = !!checkedTasks[id];
+  const isOpen = !!openDays[id];
+  const dayNames = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const expandContent = isOpen ? renderDayExpand(day, phase.color, id) : '';
+  return `
+  <div class="day-item ${isOpen?'open':''}" id="dayitem-${id}">
+    <div class="day-item-header" onclick="toggleDayExpand('${id}','${phase.id}','${week.num}','${idx}')">
+      <div class="day-check ${isDone?'done':''}" id="check-${id}"
+           onclick="event.stopPropagation(); toggleTask('${id}','${phase.id}','${week.num}')"></div>
+      <div class="day-content">
+        <div class="day-header-row">
+          <span class="day-label">${dayNames[idx] || 'Day'} ${idx+1}</span>
+          <span class="day-title" style="${isDone?'text-decoration:line-through;opacity:0.5':''}" id="dtitle-${id}">${day.title}</span>
+        </div>
+        <div class="day-tags">
+          ${day.tags.map(t=>`<span class="day-tag tag-${t}">${t.toUpperCase()}</span>`).join('')}
+        </div>
+        <div class="day-desc">${day.desc}</div>
+        ${day.trick ? `<div class="day-trick">${day.trick}</div>` : ''}
+      </div>
+      <span class="day-hours">${day.hours}</span>
+      <span class="day-chevron">&#9654;</span>
+    </div>
+    <div class="day-expand-panel" id="expand-${id}">${expandContent}</div>
+  </div>`;
+}
+
+function renderMilestones() {
+  const grid = document.getElementById('milestoneGrid');
+  grid.innerHTML = MILESTONES.map((m,i) => `
+    <div class="milestone" style="border-color:${m.color}33">
+      <div class="milestone-phase" style="color:${m.color}">${m.phase}</div>
+      <div class="milestone-title">${m.title}</div>
+      <div class="milestone-salary" style="color:${m.color}">${m.salary}</div>
+      <div class="milestone-time">30 hrs/week pace</div>
+      <div class="milestone-lock">🔒</div>
+    </div>
+  `).join('');
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  INTERACTIONS
+// ═══════════════════════════════════════════════════════════════
+function toggleWeek(phaseId, weekNum) {
+  const key = `${phaseId}-${weekNum}`;
+  openWeeks[key] = !openWeeks[key];
+  const list = document.getElementById(`daylist-${phaseId}-${weekNum}`);
+  const card = document.getElementById(`wcard-${phaseId}-${weekNum}`);
+  if (openWeeks[key]) {
+    list.style.display = 'block';
+    card.classList.add('open');
+  } else {
+    list.style.display = 'none';
+    card.classList.remove('open');
+  }
+}
+
+function toggleDayExpand(id, phaseId, weekNum, dayIdx) {
+  openDays[id] = !openDays[id];
+  const item = document.getElementById(`dayitem-${id}`);
+  const panel = document.getElementById(`expand-${id}`);
+  if (openDays[id]) {
+    item.classList.add('open');
+    // Generate content on first open
+    if (!panel.innerHTML.trim()) {
+      // Find the day data
+      const phase = PHASES.find(p => p.id == phaseId);
+      const week  = phase && phase.weeks_data.find(w => w.num == weekNum);
+      const day   = week && week.days[dayIdx];
+      if (day) panel.innerHTML = renderDayExpand(day, phase.color, id);
+    }
+    panel.style.display = 'block';
+  } else {
+    item.classList.remove('open');
+    panel.style.display = 'none';
+  }
+}
+
+function toggleSub(sid) {
+  checkedSubs[sid] = !checkedSubs[sid];
+  const el = document.getElementById(`subc-${sid}`);
+  const tx = document.getElementById(`subt-${sid}`);
+  if (checkedSubs[sid]) {
+    el.classList.add('done'); el.textContent = '✓';
+    if (tx) { tx.classList.add('done'); }
+  } else {
+    el.classList.remove('done'); el.textContent = '';
+    if (tx) { tx.classList.remove('done'); }
+  }
+  saveProgress();
+}
+
+function toggleTask(taskId, phaseId, weekNum) {
+  checkedTasks[taskId] = !checkedTasks[taskId];
+  const check = document.getElementById(`check-${taskId}`);
+  const titleEl = document.getElementById(`dtitle-${taskId}`);
+  if (checkedTasks[taskId]) {
+    check.classList.add('done');
+    if (titleEl) { titleEl.style.textDecoration = 'line-through'; titleEl.style.opacity = '0.5'; }
+    updateStreak();
+  } else {
+    check.classList.remove('done');
+    if (titleEl) { titleEl.style.textDecoration = ''; titleEl.style.opacity = ''; }
+  }
+  updateStats();
+  saveProgress();
+}
+
+function updateStreak() {
+  const today = new Date().toDateString();
+  if (lastCheckDate !== today) {
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    if (lastCheckDate === yesterday.toDateString()) {
+      streak++;
+    } else if (lastCheckDate !== today) {
+      streak = 1;
+    }
+    lastCheckDate = today;
+  }
+}
+
+function switchPhase(phaseId) {
+  activePhase = phaseId;
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  const panel = document.getElementById(`panel-${phaseId}`);
+  if (panel) panel.classList.add('active');
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    if (PHASES[i] && PHASES[i].id === phaseId) b.classList.add('active');
+  });
+  window.scrollTo({ top: 250, behavior: 'smooth' });
+}
+
+// ═══════════════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════════════
+function init() {
+  loadState();
+  renderMilestones();
+  renderTabs();
+  renderPhases();
+  updateStats();
+
+  // Auto-save every 60 seconds
+  setInterval(saveProgress, 60000);
+}
+
+init();
+</script>
+</body>
+</html>
