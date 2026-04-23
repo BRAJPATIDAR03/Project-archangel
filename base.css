@@ -1,0 +1,70 @@
+/* ═══════════════════════════════════════════════════════════════
+   BASE STYLES - Core typography, resets, and CSS variables
+   ═══════════════════════════════════════════════════════════════ */
+
+:root {
+  --bg-primary: #05070f;
+  --bg-secondary: #0b0f1e;
+  --bg-card: #0f1629;
+  --bg-card-hover: #141c35;
+  --border: rgba(99, 120, 255, 0.15);
+  --border-glow: rgba(99, 120, 255, 0.4);
+  --accent-blue: #6378ff;
+  --accent-cyan: #00d4ff;
+  --accent-violet: #a855f7;
+  --accent-green: #10b981;
+  --accent-orange: #f59e0b;
+  --accent-red: #ef4444;
+  --text-primary: #e8eaf6;
+  --text-secondary: #8892b0;
+  --text-muted: #4a5568;
+  --phase1: #6378ff;
+  --phase2: #00d4ff;
+  --phase3: #a855f7;
+  --phase4: #10b981;
+  --phase5: #f59e0b;
+  --phase6: #ef4444;
+  --font-primary: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --transition-fast: 0.15s ease;
+  --transition-base: 0.2s ease;
+  --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+body {
+  font-family: var(--font-primary);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 { line-height: 1.2; font-weight: 700; }
+
+a { color: var(--accent-blue); text-decoration: none; transition: color var(--transition-base); }
+a:hover { color: var(--accent-cyan); }
+a:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
+
+button, [role="button"] { font-family: inherit; border: none; background: none; cursor: pointer; transition: all var(--transition-base); }
+button:focus-visible { outline: 2px solid var(--accent-blue); outline-offset: 2px; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-secondary); }
+::-webkit-scrollbar-thumb { background: var(--border-glow); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
+
+.hidden { display: none !important; }
+
+.gradient {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan), var(--accent-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
