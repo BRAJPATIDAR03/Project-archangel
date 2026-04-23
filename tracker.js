@@ -5,6 +5,7 @@
  */
 
 let PHASES = []; // Will be populated with actual data
+let handleKeyboardShortcuts = () => {};
 
 /**
  * Initialize the tracker application
@@ -174,7 +175,7 @@ function setupKeyboardShortcuts() {
     'l': () => clearProgress() // Ctrl+L to clear (with confirmation)
   };
 
-  window.handleKeyboardShortcuts = (e) => {
+  handleKeyboardShortcuts = (e) => {
     const char = String.fromCharCode(e.which).toLowerCase();
     
     if ((e.ctrlKey || e.metaKey) && shortcuts[char]) {
@@ -192,6 +193,8 @@ function setupKeyboardShortcuts() {
       allTabs[nextIndex].click();
     }
   };
+
+  window.handleKeyboardShortcuts = handleKeyboardShortcuts;
 }
 
 /**
