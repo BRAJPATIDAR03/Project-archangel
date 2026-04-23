@@ -1,0 +1,285 @@
+/* ═══════════════════════════════════════════════════════════════
+   THEME STYLES - Dark/Light mode and theme variants
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Default Dark Theme */
+html {
+  color-scheme: dark light;
+}
+
+/* Light Theme - Class-based Toggle */
+html.light-mode {
+  --bg-primary: #fafafa;
+  --bg-secondary: #f5f5f5;
+  --bg-card: #ffffff;
+  --border: rgba(0, 0, 0, 0.1);
+  --border-glow: rgba(99, 120, 255, 0.2);
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --text-muted: #999999;
+  color-scheme: light dark;
+}
+
+html.light-mode header {
+  background: rgba(250, 250, 250, 0.95);
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+}
+
+html.light-mode .bg-grid {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+}
+
+html.light-mode .bg-glow-1 {
+  background: radial-gradient(circle, rgba(99, 120, 255, 0.08) 0%, transparent 70%);
+}
+
+html.light-mode .bg-glow-2 {
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.06) 0%, transparent 70%);
+}
+
+html.light-mode .bg-glow-3 {
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.04) 0%, transparent 70%);
+}
+
+html.light-mode a {
+  color: #3b82f6;
+}
+
+html.light-mode a:hover {
+  color: #0ea5e9;
+}
+
+/* System Preference (prefers-color-scheme) */
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg-primary: #fafafa;
+    --bg-secondary: #f5f5f5;
+    --bg-card: #ffffff;
+    --border: rgba(0, 0, 0, 0.1);
+    --border-glow: rgba(99, 120, 255, 0.2);
+    --text-primary: #1a1a1a;
+    --text-secondary: #666666;
+    --text-muted: #999999;
+  }
+  
+  html {
+    color-scheme: light dark;
+  }
+  
+  header {
+    background: rgba(250, 250, 250, 0.95);
+  }
+  
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  }
+  
+  a {
+    color: #3b82f6;
+  }
+  
+  a:hover {
+    color: #0ea5e9;
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: more) {
+  :root {
+    --border: rgba(99, 120, 255, 0.3);
+    --border-glow: rgba(99, 120, 255, 0.6);
+  }
+  
+  button:focus-visible {
+    outline-width: 3px;
+  }
+  
+  a:focus-visible {
+    outline-width: 3px;
+  }
+}
+
+/* Reduced Transparency Mode */
+@media (prefers-transparency: reduce) {
+  header {
+    background: var(--bg-secondary);
+  }
+  
+  .trick-card {
+    background: var(--bg-secondary);
+  }
+  
+  .week-card {
+    background: var(--bg-secondary);
+  }
+}
+
+/* Dark Mode with Custom Accent Color */
+[data-theme="dark"] {
+  --accent-blue: #7c8aff;
+  --accent-cyan: #00d4ff;
+  --accent-violet: #b873ff;
+}
+
+/* High Saturation Theme */
+[data-theme="saturated"] {
+  --accent-blue: #5063ff;
+  --accent-cyan: #00e6ff;
+  --accent-violet: #b01fff;
+  --accent-green: #00d966;
+}
+
+/* Accessibility: Focus Visible States */
+:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+/* Tab focus indicator */
+button:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+.tab-btn:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: -2px;
+}
+
+.day-check:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+.sub-check:focus-visible {
+  outline: 2px solid var(--accent-blue);
+  outline-offset: 2px;
+}
+
+/* Enhanced Focus States for Keyboard Navigation */
+.trick-card:focus-within {
+  border-color: var(--border-glow);
+  box-shadow: 0 0 0 3px rgba(99, 120, 255, 0.1);
+}
+
+.week-card:focus-within {
+  border-color: var(--border-glow);
+  box-shadow: 0 0 0 3px rgba(99, 120, 255, 0.1);
+}
+
+/* Scrollbar theming for different browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-glow);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue);
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-color: var(--border-glow) var(--bg-secondary);
+  scrollbar-width: thin;
+}
+
+/* Selection color */
+::selection {
+  background: var(--accent-blue);
+  color: white;
+}
+
+::-moz-selection {
+  background: var(--accent-blue);
+  color: white;
+}
+
+/* Placeholder text */
+::placeholder {
+  color: var(--text-muted);
+  opacity: 1;
+}
+
+::-ms-input-placeholder {
+  color: var(--text-muted);
+}
+
+/* Input and textarea styling */
+input,
+textarea,
+select {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(99, 120, 255, 0.1);
+}
+
+/* Code block styling */
+code,
+pre {
+  background: rgba(0, 0, 0, 0.3);
+  color: #86efac;
+  font-family: var(--font-mono);
+}
+
+code {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+pre {
+  padding: 12px 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+}
+
+/* Link styling in light mode */
+html.light-mode a {
+  color: #2563eb;
+}
+
+html.light-mode a:hover {
+  color: #1d4ed8;
+}
+
+html.light-mode a:visited {
+  color: #7c3aed;
+}
+
+/* Improve visual hierarchy in print */
+@media print {
+  :root {
+    --bg-primary: white;
+    --bg-card: white;
+    --text-primary: black;
+    --text-secondary: #333;
+    --text-muted: #666;
+    --border: #e0e0e0;
+  }
+}
